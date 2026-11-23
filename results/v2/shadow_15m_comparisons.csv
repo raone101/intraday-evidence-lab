@@ -1,0 +1,26 @@
+group,experiment,candidate,baseline,matched,candidate_brier,baseline_brier,delta,lower95,upper95,result
+all,price,price_logit,base_rate,263,0.1668314794,0.1691223375,-0.002290858132,-0.01097193655,0.008085612017,inconclusive
+all,profile,profile_neural,price_neural,263,0.167091121,0.1687862253,-0.001695104324,-0.002478171841,-0.0008791837649,lower error
+all,profile-vs-rate,profile_neural,base_rate,263,0.167091121,0.1691223375,-0.002031216478,-0.003026667183,-0.001033901185,lower error
+all,transfer,transfer_neural,recent_neural,263,0.1632348505,0.1923343062,-0.02909945575,-0.04867949933,-0.006881858936,lower error
+all,transfer-vs-history,transfer_neural,profile_neural,263,0.1632348505,0.167091121,-0.003856270539,-0.01001942406,0.003503336795,inconclusive
+agreement,price,price_logit,base_rate,23,0.1749690957,0.1715523023,0.003416793403,,,insufficient
+agreement,profile,profile_neural,price_neural,23,0.1713054128,0.1721386938,-0.0008332810388,,,insufficient
+agreement,profile-vs-rate,profile_neural,base_rate,23,0.1713054128,0.1715523023,-0.0002468894932,,,insufficient
+agreement,transfer,transfer_neural,recent_neural,23,0.1817275735,0.1921345866,-0.01040701315,,,insufficient
+agreement,transfer-vs-history,transfer_neural,profile_neural,23,0.1817275735,0.1713054128,0.01042216073,,,insufficient
+range_1,price,price_logit,base_rate,123,0.1170606682,0.1267866008,-0.009725932523,-0.01658679527,-0.001930195902,lower error
+range_1,profile,profile_neural,price_neural,123,0.1233139427,0.1257368815,-0.002422938773,-0.003496382299,-0.001294914807,lower error
+range_1,profile-vs-rate,profile_neural,base_rate,123,0.1233139427,0.1267866008,-0.003472658065,-0.004989022154,-0.00189488634,lower error
+range_1,transfer,transfer_neural,recent_neural,123,0.1087502874,0.1700307286,-0.06128044117,-0.09064046355,-0.03081000406,lower error
+range_1,transfer-vs-history,transfer_neural,profile_neural,123,0.1087502874,0.1233139427,-0.01456365526,-0.02407431691,-0.003494897013,lower error
+range_2,price,price_logit,base_rate,113,0.1980285597,0.2005125471,-0.002483987453,-0.01544368389,0.0106389626,inconclusive
+range_2,profile,profile_neural,price_neural,113,0.1993968021,0.1999079103,-0.0005111081451,-0.001110411517,0.0001059494709,inconclusive
+range_2,profile-vs-rate,profile_neural,base_rate,113,0.1993968021,0.2005125471,-0.00111574499,-0.002600029261,-0.000117295773,lower error
+range_2,transfer,transfer_neural,recent_neural,113,0.2010250512,0.2085646057,-0.007539554558,-0.03734450826,0.02348166533,inconclusive
+range_2,transfer-vs-history,transfer_neural,profile_neural,113,0.2010250512,0.1993968021,0.001628249054,-0.006903221873,0.01030724682,inconclusive
+range_3,price,price_logit,base_rate,27,0.262999616,0.2306112977,0.03238831829,,,insufficient
+range_3,profile,profile_neural,price_neural,27,0.2313152308,0.2346498881,-0.003334657318,,,insufficient
+range_3,profile-vs-rate,profile_neural,base_rate,27,0.2313152308,0.2306112977,0.0007039330459,,,insufficient
+range_3,transfer,transfer_neural,recent_neural,27,0.253283316,0.226012684,0.02727063209,,,insufficient
+range_3,transfer-vs-history,transfer_neural,profile_neural,27,0.253283316,0.2313152308,0.02196808526,,,insufficient
