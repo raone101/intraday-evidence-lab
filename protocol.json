@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "symbol": "SPY",
   "paper_cutoff": "2023-11-23",
   "historical_test_start": "2024-07-01",
@@ -13,18 +13,79 @@
   "shares": 1,
   "initial_usd": 10000,
   "primary_cost_bps_each_side": 5,
-  "sensitivity_bps_each_side": [0, 2, 5, 10],
+  "sensitivity_bps_each_side": [
+    0,
+    2,
+    5,
+    10
+  ],
   "rvol_min": 1.0,
-  "minimum_training_sessions": 60,
-  "veto_probability": 0.55,
-  "logit_C": 1.0,
-  "features": ["first30_return", "opening_relative_volume", "above_range", "above_band", "above_vwap"],
-  "variants": ["cash", "clock", "breakout", "band", "either", "agreement", "agreement_ml"],
-  "primary_contrast": "agreement_ml minus agreement, paired net dollars per eligible test day, including flat days",
-  "secondary_contrasts": ["agreement minus breakout", "agreement minus band"],
+  "features": [
+    "opening5_return",
+    "first30_return",
+    "opening_relative_volume",
+    "above_range",
+    "above_band",
+    "above_vwap"
+  ],
+  "variants": [
+    "cash",
+    "clock",
+    "breakout",
+    "band",
+    "either",
+    "agreement"
+  ],
+  "primary_contrast": "agreement minus breakout, paired net dollars per session, including flat days",
+  "secondary_contrasts": [
+    "agreement minus band",
+    "either minus agreement"
+  ],
   "interval": "paired moving-block bootstrap, 10 sessions, 5000 replicates, seed 719",
-  "decisions": "Breakout = green first five-minute candle, relative first-five volume >= 1 and 09:59 close above opening five-minute high. Band = 09:59 close above the open times (1 + mean absolute 30-minute move over the previous 14 valid sessions) and above first-half-hour volume-weighted typical price. Both get one vote. The learned sceptic sees only five numeric features and trains on all resolved hypothetical clock trades before its test month. It can only veto agreements. No parameter search.",
+  "decisions": "Breakout = green first five-minute candle, relative first-five volume >= 1 and 09:59 close above opening five-minute high. Band = 09:59 close above the open times (1 + mean absolute 30-minute move over the previous 14 valid sessions) and above first-half-hour volume-weighted typical price. Compare either signal and their agreement as separate variants. All order flags come from price rules. Research forecasts and reviewers are read-only.",
   "execution": "Use regular NYSE sessions including early closes. A signal uses opening 30 complete one-minute bars. First eligible fill at 10:05 open. Skip an absent entry bar at its timestamp. Pre-scheduled exit at the open 10 minutes before the official close, or the next available minute that session. Abort for an open position with no exit data. No overnight positions.",
   "data_policy": "Past-only features, unique timestamps and OHLCV validity. Log missing opening data and warm-up. Model trading friction proportional to each fill. Score all test sessions on a common calendar. Keep raw vendor bars out of source control. Both source archives are third-party copies.",
-  "selection_policy": "Publish null or negative results with the components. Freeze parameters before scoring. Track follow-ups as new trials."
+  "selection_policy": "Publish null or negative results with the components. Freeze parameters before scoring. Track follow-ups as new trials.",
+  "shadow": {
+    "version": 1,
+    "horizons": [
+      "15m",
+      "session_exit"
+    ],
+    "minimum_training_sessions": 60,
+    "recent_sessions": 126,
+    "minimum_paired_sessions": 60,
+    "profile_bps": 5,
+    "hidden_units": 22,
+    "epochs_each_stage": 40,
+    "seed": 719,
+    "stress_entry_delay_minutes": [
+      0,
+      1,
+      3,
+      5
+    ],
+    "experiments": {
+      "price": [
+        "price_logit",
+        "base_rate"
+      ],
+      "profile": [
+        "profile_neural",
+        "price_neural"
+      ],
+      "profile-vs-rate": [
+        "profile_neural",
+        "base_rate"
+      ],
+      "transfer": [
+        "transfer_neural",
+        "recent_neural"
+      ],
+      "transfer-vs-history": [
+        "transfer_neural",
+        "profile_neural"
+      ]
+    }
+  }
 }

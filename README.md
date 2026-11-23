@@ -1,77 +1,98 @@
 # Intraday evidence lab
 
-Does an AI veto improve a day trade that two price-based rules already agree on? In this historical SPY experiment, both rules agreed 23 times. The rules earned **$18.91 after costs** on one share per trade. The trained model rejected all 23 and earned **$0**. The comparison is too uncertain to establish an edge.
+An AI-assisted portfolio project that lets intraday rules make simulated decisions, then checks those decisions against the data. Version 2 removes the model veto and adds independent reviewers and research experiments that run alongside the rules.
 
-The project traces two papers into executable rules, compares seven variants on the same market and clock, and records what each system knew before each trade. A paper runner can replay an archived session or watch arriving minute bars. An optional pair of local language-model reviewers can argue either side of a sealed decision.
+## What is happening now
 
-![Net simulated dollars by rule at five basis points per side](results/after_costs.png)
+Every eligible SPY session, the paper runner checks two rules using the first 30 minutes of completed market bars.
 
-## What traded
+- **Opening breakout** checks for a green first five minutes, at least average opening volume and a break above the opening high.
+- **Noise band** checks whether the first half-hour move is unusually large and above the opening volume-weighted average.
+- **Paper variants** simulate each rule on its own, either rule, both rules agreeing, a fixed-time trade every eligible day, and cash. Each participating variant simulates one share at 10:05 New York time and exits ten minutes before the session closes. The stock exchange calendar handles early closes.
 
-Each session starts at 09:30 New York time. At 10:00, the **breakout** voter checks whether SPY broke its first five-minute high after a positive opening candle and at least average opening volume. The **band** voter checks whether the move exceeds its normal opening move over the previous 14 valid sessions and whether price is above the opening volume-weighted average. Each rule knows the first half-hour. Neither has access to its fill.
+The optional AI reviewers first assess the same outcome-blind packet separately. Then each checks the other’s finding and proposes a correction or a future comparison. Their reports are read-only. Research forecasts are scored separately after the outcomes arrive. The paper runner works independently of both.
 
-The **AI veto** is a standardised logistic regression retrained at the start of each month on earlier resolved trades. It predicts the chance that a hypothetical fixed-time long ends positive after costs. It can accept an agreement only at a probability of at least 55%. A participating variant buys one simulated share at the 10:05 minute open and exits ten minutes before the official close. The shortened-session calendar is applied automatically.
+```mermaid
+flowchart TD
+    bars["Completed minute bars"] --> rules["Breakout and noise band"]
+    rules --> sim["Paper decisions and fills"]
+    sim --> journal["Read-only decision packet"]
+    journal --> peer["Two reviewers cross-check"]
+    bars --> forecast["Separate research forecasts"]
+    forecast --> peer
+    peer --> trial["Proposed follow-up study"]
+```
 
-| Variant | Trades | Gross P&L | Net P&L |
-|---|---:|---:|---:|
-| Stay in cash | 0 | $0.00 | $0.00 |
-| Fixed-time entry every eligible day | 263 | $20.68 | -$130.56 |
-| Opening breakout alone | 28 | $30.37 | $14.47 |
-| Noise band alone | 53 | $22.93 | -$7.40 |
-| Either rule | 58 | $21.25 | -$11.84 |
-| Both rules agree | 23 | $32.05 | $18.91 |
-| Both rules agree and AI accepts | 0 | $0.00 | $0.00 |
+[17 July replay](results/v2/example_replay.json) shows the practical change. Both rules qualified, so the agreement variant recorded a simulated trade which lost $2.16 after costs. The earlier vetoed result is available in the [original version](https://github.com/raone101/intraday-evidence-lab/tree/5f4a21eeabe63e870c8c5a641c971c98bf3bddb1).
 
-The common historical test runs from **1 July 2024 to 18 July 2025**. Each variant starts with $10,000 and pays 0.05% of traded value on each side. The fixed-time strategy's $20.68 gross became a $130.56 loss after 263 round trips. Agreement's $18.91 was 0.19% of its initial account. It falls to $5.76 at 0.10% per side. The primary difference, AI minus agreement, was **-$0.072 per eligible day**, with a paired 95% block-bootstrap interval from **-$0.472 to +$0.201**. All three registered comparison intervals span zero. [Cost scenarios](results/summary.csv) · [Paired comparisons](results/contrasts.csv)
+## Historical results
 
-## Try one decision
+263 SPY sessions, 1 July 2024 to 18 July 2025. Each variant has $10,000 illustrative starting capital, a fixed one-share trade and an assumed 0.05% cost each side.
 
-Python 3.12. From the repository root, create an environment and install the pinned requirements. The first command after installation works with the committed journal, without downloads, accounts or model keys.
+| Rule variant | Round trips | Net USD |
+|---|---:|---:|
+| Cash | 0 | $0.00 |
+| Fixed-time entry | 263 | -$130.56 |
+| Breakout | 28 | +$14.47 |
+| Noise band | 53 | -$7.40 |
+| Either rule | 58 | -$11.84 |
+| Both rules agree | 23 | +$18.91 |
 
-~~~bash
-python -m venv .venv
-source .venv/bin/activate
+All 425 round trips across the six variants were reproduced by a separate fill engine. The rules share some information and their paired performance intervals span zero. The coverage and cost assumptions constrain what can be inferred about future returns. [Summary](results/v2/summary.csv) · [Journal](results/v2/journal.csv) · [Reconciliation](results/v2/audit.json)
+
+### What the new models found
+
+The attached papers inspired an opening **time-at-price profile**, a test of **pretraining on older data**, and separate results for different opening ranges. These are adaptations to the available SPY minute bars. Brier error measures the accuracy of a probability forecast. Lower is better.
+
+| Test across all 263 sessions | Reduced error? |
+|---|---|
+| Opening-profile features added to the same 15-minute neural model | 0.1688 to 0.1671. An exploratory improvement of 0.0017. |
+| Older-to-recent training versus the last 126 sessions alone | 0.1923 to 0.1632 for 15 minutes. Its comparison with a single full-history fit was inconclusive. |
+| Forecasting the afternoon exit instead | All five matched comparisons were inconclusive. |
+| Restricting either forecast to days both rules agreed | Only 23 matched observations. The trial requires 60 for directional evidence. |
+
+The models were retrained before each test month. These are retrospective results from a reused date range and the interval checks are unadjusted for multiple comparisons. Forecast accuracy and simulated trading P&L are measured separately. [15-minute results](results/v2/shadow_15m_comparisons.csv) · [Afternoon results](results/v2/shadow_exit_comparisons.csv) · [Fill and cost stress](results/v2/fill_stress.csv)
+
+## Run it locally
+
+Use Python 3.12. Create an environment with `python -m venv .venv` and activate it with `.\.venv\Scripts\Activate.ps1` on Windows PowerShell or `source .venv/bin/activate` on macOS or Linux.
+
+```bash
 python -m pip install -r requirements.txt
 python -m intraday.review --date 2024-07-17
-~~~
-
-On Windows PowerShell, activate the environment with `.\.venv\Scripts\Activate.ps1`.
-
-On 17 July 2024, opening volume was 1.68 times its recent mean and both rules voted yes. The model estimated 42.2%. Its veto avoided a $2.16 loss on that day. Across all 23 agreement days its veto also removed winning trades. The full decision, simulated fills and counterfactuals are in the [daily journal](results/journal.csv) and [trades](results/trades.csv).
-
-~~~bash
-python -m intraday --download --out runs/first
-python -m intraday.paper --data data/primary.csv --replay 2024-07-17
 python -m unittest discover -s tests -v
-~~~
+```
 
-The first command downloads both pinned public archives, verifies their SHA-256 hashes, runs the historical experiment and checks the result with a second engine. Give each run a fresh output directory. The second command advances a single morning, entry and exit in sequence and writes idempotent events to SQLite. The example is also available as [a recorded replay](results/example_replay.json).
+The first review reads the committed example journal and recomputes both flags locally. From a local archive, these commands reproduce the ledger and research:
 
-## Run a paper session
+```bash
+python -m intraday --download --out runs/rules-v2
+python -m intraday.paper --data data/primary.csv --replay 2024-07-17 --db runs/replay.sqlite
+python -m intraday.shadow run --data data/primary.csv --out runs/shadow-15m
+python -m intraday.review --date 2024-07-17 --db runs/replay.sqlite --forecasts runs/shadow-15m/predictions.csv
+```
 
-Start the watcher before 10:00 New York time. It will create a daily decision from arriving data, simulate participating variants and log their entry, exit or missed decision. You can use either your own atomically refreshed minute CSV or the read-only Alpaca market-data adapter. The Alpaca command reads `APCA_API_KEY_ID` and `APCA_API_SECRET_KEY` from your local environment. Use the data feed your account is entitled to. A process must be running during the decision window to create a prospective decision.
+For two language model reviewers, add `--model YOUR_LOCAL_OLLAMA_MODEL --out runs/review-2024-07-17.json`. Replace the model tag with one installed locally in Ollama. Each response records its evidence and suggested experiment. Review errors stay in the review report. [Ollama structured responses](https://ollama.com/blog/structured-outputs)
 
-~~~bash
-python -m intraday.paper --watch --data path/to/your_spy_minutes.csv
-python -m intraday.paper --watch --alpaca iex
-~~~
+## Paper watch and later tests
 
-Choose one feed for a trial. Historical results use the two archived files. The forward adapter uses a distinct data source and has been exercised against recorded API-shaped fixtures. A live feed and a hosted watcher have not been activated for this project. [Data format, feed coverage and fill assumptions](research/data.md)
+`python -m intraday.paper --watch --data path/to/spy-minute-bars.csv` or `python -m intraday.paper --watch --alpaca iex` watches current data during a running process and stores decisions separately from historical replay. The Alpaca reader uses locally configured `APCA_API_KEY_ID` and `APCA_API_SECRET_KEY` for market data. Start watching before 10:00 New York time. The repository contains runnable simulation code. It has no hosted watcher or broker execution. [Feed schema and fill assumptions](research/data.md)
 
-To invite two local reviewers, start Ollama with an installed model, then pass its tag. Both see identical anonymous features and work independently. Each returns a vote and a reason. Their output is commentary only. The recorded research run exercised the blind packet and a mocked model response. No language-model trading performance is claimed. [Ollama structured responses](https://ollama.com/blog/structured-outputs)
+A follow-up can be registered with `python -m intraday.shadow register --help`. It fixes the candidate, baseline, cohort, end date and implementation fingerprint before the evaluation period. Execute the first registered test once the CSV contains sessions after registration.
 
-~~~bash
-python -m intraday.review --date 2024-07-17 --model YOUR_LOCAL_MODEL
-~~~
+```bash
+python -m intraday.shadow run --data path/to/growing-spy.csv --trial research/profile-follow-up.json --out runs/profile-follow-up
+```
+
+The report says whether the candidate lowered forecast error, raised it or remains inconclusive. It marks interim or small samples explicitly and keeps predictions out of the trading rule. A later test may supply `--transfer-data` and a distinct `--transfer-symbol` for the cross-instrument experiment. Register the source symbol with the trial before scoring.
 
 ## Research trail
 
-| Read this | What it shows |
+| Record | Contents |
 |---|---|
-| [Repository review](research/repositories.md) and [file manifest](research/source_manifest.csv) | 30 repositories, 48 pinned files and two official platform examples. Includes how trades are made, research attribution, shortcomings and design decisions. |
-| [Paper register](research/papers.md) | The recent studies, what was implemented, the published details omitted by the adaptation, and why the other named ideas require different data. |
-| [Protocol](protocol.json) and [decision log](research/trials.md) | Project authorship, frozen rules, missing-data decision, unsuccessful AI filter and an unrun follow-up hypothesis. |
-| [Implementation](intraday/experiment.py) and [independent checks](intraday/checks.py) | Rolling signal calculation, monthly ML fit, cost scenarios, uncertainty estimates, a second ballot calculation and an external execution engine. |
-| [Audit](results/audit.json) and [monthly fits](results/folds.csv) | 1,627 eligible ballots reconstructed, 425 simulated round trips reconciled across variants, and one conflicting band vote across 989 common archive dates. The variants can share trades. |
+| [New paper register](research/papers-v2.md) | Adaptations, exact methods, controls and all supplied document dispositions |
+| [Registered follow-up](research/profile-follow-up.json) | The first opening-profile hypothesis, with outcome dates after registration |
+| [Repository review](research/repositories.md) and [source manifest](research/source_manifest.csv) | 48 pinned files across 30 projects and what shaped the first build |
+| [Version 1 papers](research/papers.md) and [version 1 decision log](research/trials.md) | The origins of the two rules, earlier assumptions and the original AI veto result |
 
-The two trading papers were written by the same three researchers, and both signals use the same underlying market data. This portfolio project's contribution is the test of their intersection and what it reveals when the AI sits out. The first implementation and research review were AI-assisted. The recorded return comes from a retrospective simulation using bar-open prices. There is no funded brokerage connection or live trading record.
+The original project brief supplied the two-rule comparison, cross-checking and journal workflow. An AI coding assistant built the first implementation and the reviewer-only update. All reported trials here are simulations.
