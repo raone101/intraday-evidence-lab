@@ -14,7 +14,7 @@ import exchange_calendars as xc
 import pandas as pd
 
 from .data import NY, load
-from .experiment import FEATURES, P, fit_month, session_rows
+from .experiment import FEATURES, P, rule_variants, session_rows
 from .feed import refresh
 
 
@@ -52,29 +52,13 @@ def ballot(visible, date, previous):
     if date not in rows.index or not rows.at[date, "eligible"]:
         return {"status": "opening bars or warm-up incomplete", "orders": []}
     row = rows.loc[date]
-    model, fold = fit_month(rows, date[:7])
-    p = (
-        float(model.predict_proba(rows.loc[[date], FEATURES])[0, 1])
-        if model is not None
-        else None
-    )
     a, b = bool(row.breakout), bool(row.band)
-    flags = dict(
-        clock=True,
-        breakout=a,
-        band=b,
-        either=a or b,
-        agreement=a and b,
-        agreement_ml=a and b and p is not None and p >= P["veto_probability"],
-    )
+    flags = rule_variants(True, a, b)
     return dict(
         status="ready",
-        orders=[k for k, v in flags.items() if v],
+        orders=[k for k, fires in flags.items() if fires],
         breakout=a,
         band=b,
-        probability=p,
-        trained_through=fold.get("last"),
-        training_rows=fold["rows"],
         features={k: float(row[k]) for k in FEATURES},
     )
 
@@ -197,7 +181,7 @@ def main():
             data = load(args.data)
             with args.data.open("rb") as opened_file:
                 replay_id = (
-                    "replay:"
+                    f"replay:v{P['version']}:"
                     + hashlib.file_digest(opened_file, "sha256").hexdigest()[:16]
                 )
             if date not in set(data.index.strftime("%Y-%m-%d")):
@@ -222,7 +206,7 @@ def main():
             if args.alpaca
             else hashlib.sha256(str(path.resolve()).encode()).hexdigest()[:16]
         )
-        mode = "forward:" + source_id
+        mode = f"forward:v{P['version']}:" + source_id
         while True:
             now = pd.Timestamp.now(tz=NY)
             date = str(now.date())

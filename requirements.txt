@@ -3,3 +3,4 @@ pandas==2.2.3
 scikit-learn==1.8.0
 exchange-calendars==4.13.1
 backtesting==0.6.5
+threadpoolctl==3.6.0

@@ -1,0 +1,4 @@
+left,right,delta_usd_per_session,lower95,upper95,differing_sessions
+agreement,breakout,0.01688057034,-0.03779178707,0.07313971483,5
+agreement,band,0.1000225559,-0.07195614773,0.3124241393,30
+either,agreement,-0.1169031262,-0.323466469,0.06268941422,35

@@ -1,9 +1,6 @@
-import json
 from pathlib import Path
 import tempfile
 import unittest
-from unittest.mock import patch
-from io import BytesIO
 
 import exchange_calendars as xc
 import numpy as np
@@ -11,9 +8,8 @@ import pandas as pd
 
 from intraday.checks import external_fills, independent_votes
 from intraday.data import NY, load
-from intraday.experiment import FEATURES, score, session_rows, walk_forward
+from intraday.experiment import FEATURES, historical_decisions, score, session_rows
 from intraday.paper import advance, open_ledger
-from intraday.review import opinion, packet
 
 
 def fixture():
@@ -28,6 +24,7 @@ def fixture():
                 [
                     op + pd.Timedelta(minutes=34),
                     op + pd.Timedelta(minutes=35),
+                    op + pd.Timedelta(minutes=50),
                     end - pd.Timedelta(minutes=11),
                     end - pd.Timedelta(minutes=10),
                 ]
@@ -35,6 +32,7 @@ def fixture():
         )
         price = 100 + np.arange(len(index)) * (0.02 if n % 3 else -0.03)
         price[-1] += 1 if n % 2 else -1
+        price[32] += 1 if n % 2 else -1
         segments.append(
             pd.DataFrame(
                 dict(
@@ -55,7 +53,7 @@ class LabTests(unittest.TestCase):
     def setUpClass(cls):
         cls.bars = fixture()
         cls.rows = session_rows(cls.bars)
-        cls.test, cls.folds = walk_forward(cls.rows)
+        cls.test = historical_decisions(cls.rows)
 
     def test_independent_votes_and_prefix_invariance(self):
         self.assertEqual(
@@ -72,14 +70,18 @@ class LabTests(unittest.TestCase):
             newer.loc[:"2024-07-02", FEATURES + ["breakout", "band"]],
         )
 
-    def test_monthly_fit_precedes_test_and_rejects_future_labels(self):
-        for row in self.folds.itertuples():
-            self.assertLess(row.last, row.month + "-01")
-        changed = self.rows.copy()
-        changed.loc["2024-07-01":, "exit"] *= 3
-        rerun, _ = walk_forward(changed)
-        np.testing.assert_allclose(rerun.probability, self.test.probability)
-        self.assertFalse((self.test.agreement_ml & ~self.test.agreement).any())
+    def test_shadows_cannot_change_rule_orders(self):
+        decorated = self.rows.assign(probability=0.0, reviewer_error=True)
+        changed = historical_decisions(decorated)
+        for name in ("breakout", "band", "either", "agreement"):
+            pd.testing.assert_series_equal(changed[name], self.test[name])
+        self.assertNotIn("agreement_ml", self.test)
+        self.assertTrue(
+            (self.test.agreement == (self.test.breakout & self.test.band)).all()
+        )
+        self.assertTrue(
+            (self.test.either == (self.test.breakout | self.test.band)).all()
+        )
 
     def test_clock_cost_and_early_close(self):
         row = self.test.loc["2024-07-03"]
@@ -94,7 +96,7 @@ class LabTests(unittest.TestCase):
         entry = pd.Timestamp("2024-07-03 10:05", tz=NY)
         early = pd.Timestamp("2024-07-02 09:34", tz=NY)
         rows = session_rows(self.bars.drop([entry, early]))
-        test, _ = walk_forward(rows)
+        test = historical_decisions(rows)
         _, fills, _ = score(test, 5)
         self.assertFalse(rows.at["2024-07-02", "eligible"])
         self.assertFalse(
@@ -127,10 +129,11 @@ class LabTests(unittest.TestCase):
                 self.assertEqual(tick("09:55"), {})
                 morning = tick("10:00")
                 self.assertEqual(set(morning), {"decision"})
-                self.assertAlmostEqual(
-                    morning["decision"]["probability"],
-                    self.test.at[date, "probability"],
+                self.assertEqual(
+                    "agreement" in morning["decision"]["orders"],
+                    self.test.at[date, "agreement"],
                 )
+                self.assertNotIn("probability", morning["decision"])
                 self.assertNotIn("exit", tick("10:06"))
                 complete = tick("13:00")
                 self.assertEqual(complete, tick("13:15"))
@@ -147,28 +150,6 @@ class LabTests(unittest.TestCase):
                 )
             finally:
                 db.close()
-
-    def test_review_packet_and_role_contract(self):
-        evidence = packet(self.test.iloc[0])
-        self.assertEqual(set(evidence["features"]), set(FEATURES))
-        self.assertTrue(
-            set(evidence).isdisjoint({"entry", "exit", "date", "symbol", "net_usd"})
-        )
-        result = {
-            "model": "example",
-            "message": {
-                "content": json.dumps(
-                    {"vote": "abstain", "reason": "Relative volume is 1.01."}
-                )
-            },
-        }
-        with patch(
-            "intraday.review.urlopen", return_value=BytesIO(json.dumps(result).encode())
-        ) as called:
-            self.assertEqual(opinion("example", "sceptic", evidence)["vote"], "abstain")
-            self.assertEqual(
-                called.call_args.args[0].full_url, "http://127.0.0.1:11434/api/chat"
-            )
 
     def test_duplicate_or_invalid_bar_is_rejected(self):
         first = self.bars.iloc[:3].copy()

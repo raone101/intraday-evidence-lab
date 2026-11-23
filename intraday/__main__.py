@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 
 from .data import fetch, load
-from .experiment import P, ROOT, session_rows, walk_forward, score, contrasts
+from .experiment import P, ROOT, session_rows, historical_decisions, score, contrasts
 from .checks import independent_votes, external_fills
 
 
@@ -19,28 +19,28 @@ def run(path, dest, other=None):
         raise ValueError("No bars within the frozen study dates.")
     rows = session_rows(bars)
     votes_checked = independent_votes(bars, rows)
-    test, folds = walk_forward(rows)
+    test = historical_decisions(rows)
     daily, trades, main = score(test, P["primary_cost_bps_each_side"])
     counts = external_fills(bars, test, trades)
     summaries = pd.concat(
         [score(test, b)[2] for b in P["sensitivity_bps_each_side"]], ignore_index=True
     )
     test["decision_reason"] = np.select(
-        [~test.eligible, test.agreement_ml, test.agreement, test.either],
+        [~test.eligible, test.agreement, test.either],
         [
             test.quality,
-            "rules agree and model accepts",
-            "rules agree and model vetoes or is unavailable",
+            "both price rules agree",
             "rules disagree",
         ],
         default="neither proposes a trade",
     )
     test["execution_state"] = np.select(
-        [~test.agreement_ml, test.entry.isna()],
+        [~test.agreement, test.entry.isna()],
         ["flat", "entry print missing"],
         default="round trip",
     )
     metadata = dict(
+        protocol_version=P["version"],
         raw_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
         protocol_sha256=hashlib.sha256(
             (ROOT / "protocol.json").read_bytes()
@@ -68,7 +68,6 @@ def run(path, dest, other=None):
         "trades": trades.reset_index(),
         "daily_net_usd": daily.reset_index(),
         "journal": test.reset_index(),
-        "folds": folds,
         "contrasts": contrasts(daily),
     }
     if other is not None:
@@ -135,7 +134,7 @@ def main():
         action="store_true",
         help="download both registered archives and verify their hashes",
     )
-    p.add_argument("--out", type=Path, default=Path("runs/first"))
+    p.add_argument("--out", type=Path, default=Path("runs/rules-v2"))
     args = p.parse_args()
     if args.download and (args.data or args.compare):
         p.error("Choose downloaded archives or explicit paths.")

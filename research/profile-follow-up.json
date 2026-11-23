@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "registered_at": "2026-11-23T22:35:53.251139+00:00",
+  "after": "2026-11-23",
+  "through": "2027-05-28",
+  "horizon": "15m",
+  "hypothesis": "The opening time-at-price profile reduces the 15-minute Brier error compared with the same neural network using price-rule inputs alone.",
+  "experiment": "profile",
+  "cohort": "all",
+  "transfer_symbol": null,
+  "recipe_sha256": "6479ba3a1fc21e4657987fa4db973dbd5ed58b9e4acb45d66496ebf7177a6297"
+}

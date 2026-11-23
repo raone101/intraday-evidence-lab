@@ -1,0 +1,22 @@
+{
+  "mode": "retrospective",
+  "requested_start": "2024-07-01",
+  "requested_end": "2025-07-18",
+  "first_prediction_session": "2024-07-01",
+  "last_prediction_session": "2025-07-18",
+  "horizon": "15m",
+  "observation_end_reached": true,
+  "target_sha256": "d4671c48d18bdaab21f4b44e02992d2fc91070b01a357189f67b2305a75f9ee6",
+  "source_symbol": "SPY earlier sessions",
+  "source_sha256": null,
+  "trial_sha256": null,
+  "recipe_sha256": "6479ba3a1fc21e4657987fa4db973dbd5ed58b9e4acb45d66496ebf7177a6297",
+  "protocol_sha256": "0496b97cd16a7e8883f2aaaca2be4d9e3ba965744d47095a368b0b52b4d9f8f3",
+  "eligible_vote_overlap": {
+    "breakout_0_band_0": 205,
+    "breakout_0_band_1": 30,
+    "breakout_1_band_0": 5,
+    "breakout_1_band_1": 23
+  },
+  "vote_phi": 0.5334334590811323
+}

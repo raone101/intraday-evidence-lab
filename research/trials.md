@@ -1,9 +1,11 @@
 # Decision log
 
+> This page records version 1. [Version 2 and the reviewer-only workflow](../README.md) remove the model veto.
+
 | Stage | Decision and reason |
 |---|---|
 | Question | Does agreement between two published opening-momentum ideas improve net returns, and does a learned veto add anything once the rules agree? Fix a simple market and intraday clock so each extra component can be removed separately. |
-| Before scoring | Wrote and locally committed the seven variants, 14-session window, 0.55 veto, timing, label, costs and comparisons before calculating performance. The public-source research and the historical dates already existed when the project was designed. This is a retrospective walk-forward evaluation. [Frozen protocol](../protocol.json) |
+| Before scoring | Wrote and locally committed the seven variants, 14-session window, 0.55 veto, timing, label, costs and comparisons before calculating performance. The public-source research and the historical dates already existed when the project was designed. This is a retrospective walk-forward evaluation. [Frozen v1 protocol](https://github.com/raone101/intraday-evidence-lab/blob/5f4a21eeabe63e870c8c5a641c971c98bf3bddb1/protocol.json) |
 | Input check | The primary archive stops at 15:31 New York time on 12 August 2019. The first run stopped because there was no scheduled exit. This was a training-only session. Its observed morning remains available for historical opening statistics. Its unresolved hypothetical outcome is excluded from model fitting. Any comparable unresolved exit on a scored session still halts the historical run. The rule, cost, holdout and threshold were unchanged. |
 | First scored outcome | The agreement rule took 23 trades. Five more breakout trades failed the band test. The conditional model probability on the 23 agreements ranged from 0.4061 to 0.5254. The frozen 0.55 threshold rejected all 23. The model estimated positive net outcome on all eligible clock trades during training. It was not fitted specifically to agreements. [Journal](../results/journal.csv) |
 | Independent checks | The shifted-array implementation matched every eligible morning ballot. Backtesting.py reproduced timestamps, quantities through fixed one-share configuration, prices, commissions, trade P&L and closing equity. A second archive diverged on one band vote. [Audit](../results/audit.json) |
