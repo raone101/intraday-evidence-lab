@@ -1,5 +1,7 @@
 # Paper register
 
+> This page records version 1. [Version 2 and the reviewer-only workflow](../README.md) remove the model veto.
+
 The selection window is 23 November 2023 to 23 November 2026. Dates below refer to the version identified, with earlier working versions noted where relevant. The input notes mixed studies, software documentation, interviews and reported profits. Each entry says which part, if any, became executable code.
 
 ## Two hypotheses implemented
