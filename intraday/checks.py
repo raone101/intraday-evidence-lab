@@ -25,6 +25,7 @@ def independent_votes(bars, rows):
     sigma = ret.abs().shift(1).rolling(window).mean()
     dollar = (local.high + local.low + local.close) * local.volume / 3
     weighted = dollar.groupby(local.index.strftime("%Y-%m-%d")).sum() / g.volume.sum()
+    obs["opening5_return"] = (f.close.last() / open_ - 1).loc[dates]
     obs["first30_return"] = ret
     obs["opening_relative_volume"] = rvol
     obs["above_range"] = (end / f.high.max() - 1).loc[dates]

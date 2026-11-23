@@ -8,9 +8,6 @@ from pathlib import Path
 import exchange_calendars as xc
 import numpy as np
 import pandas as pd
-from sklearn.linear_model import LogisticRegression
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
 
 from .data import NY
 
@@ -74,6 +71,7 @@ def session_rows(bars, *, require_scored_exit=True):
                 typical = early[["high", "low", "close"]].mean(axis=1)
                 vwap = np.average(typical, weights=early.volume)
                 row.update(
+                    opening5_return=five.close.iloc[-1] / opening - 1,
                     first30_return=ret,
                     opening_relative_volume=rvol,
                     above_range=last / five.high.max() - 1,
@@ -107,53 +105,23 @@ def session_rows(bars, *, require_scored_exit=True):
     return pd.DataFrame(rows).set_index("date")
 
 
-def fit_month(rows, month):
-    train = rows.loc[(rows.index < month + "-01") & rows.eligible].dropna(
-        subset=["entry", "exit"]
+def rule_variants(eligible, breakout, band):
+    """The complete order policy. Inputs are bools or aligned boolean Series."""
+    return dict(
+        cash=eligible & False,
+        clock=eligible,
+        breakout=eligible & breakout,
+        band=eligible & band,
+        either=eligible & (breakout | band),
+        agreement=eligible & breakout & band,
     )
-    rate = P["primary_cost_bps_each_side"] / 10000
-    y = (train.exit * (1 - rate) > train.entry * (1 + rate)).astype(int)
-    fold = dict(month=month, rows=len(train), status="no model")
-    if len(train) < P["minimum_training_sessions"] or y.nunique() < 2:
-        return None, fold
-    model = make_pipeline(
-        StandardScaler(), LogisticRegression(C=P["logit_C"], max_iter=1000)
-    )
-    model.fit(train[FEATURES], y)
-    fold.update(
-        first=train.index[0],
-        last=train.index[-1],
-        positive_rate=float(y.mean()),
-        status="fitted",
-        **dict(zip(FEATURES, model[-1].coef_[0])),
-    )
-    return model, fold
 
 
-def walk_forward(rows):
+def historical_decisions(rows):
     test = rows.loc[P["historical_test_start"] :].copy()
     if test.empty:
         raise ValueError("No sessions in the registered historical test period.")
-    test["probability"] = np.nan
-    test["training_through"] = ""
-    folds = []
-    for month, block in test.groupby(test.index.str[:7], sort=True):
-        model, fold = fit_month(rows, month)
-        folds.append(fold)
-        if model is None:
-            continue
-        valid = block.index[block.eligible]
-        if len(valid):
-            test.loc[valid, "probability"] = model.predict_proba(
-                block.loc[valid, FEATURES]
-            )[:, 1]
-        test.loc[block.index, "training_through"] = fold["last"]
-    test["cash"] = False
-    test["clock"] = test.eligible
-    test["either"] = test.breakout | test.band
-    test["agreement"] = test.breakout & test.band
-    test["agreement_ml"] = test.agreement & test.probability.ge(P["veto_probability"])
-    return test, pd.DataFrame(folds)
+    return test.assign(**rule_variants(test.eligible, test.breakout, test.band))
 
 
 def score(test, bps):
@@ -190,19 +158,23 @@ def score(test, bps):
     return daily, pd.concat(trades), pd.DataFrame(summaries)
 
 
-def contrasts(daily):
+def paired_interval(differences):
     rng = np.random.default_rng(719)
-    n, length = len(daily), min(10, len(daily))
+    n, length = len(differences), min(10, len(differences))
     starts = rng.integers(0, n - length + 1, (5000, (n + length - 1) // length))
     indices = (starts[:, :, None] + np.arange(length)).reshape(5000, -1)[:, :n]
+    return np.quantile(differences[indices].mean(axis=1), [0.025, 0.975])
+
+
+def contrasts(daily):
     output = []
     for left, right in [
-        ("agreement_ml", "agreement"),
         ("agreement", "breakout"),
         ("agreement", "band"),
+        ("either", "agreement"),
     ]:
         difference = (daily[left] - daily[right]).to_numpy()
-        lo, hi = np.quantile(difference[indices].mean(axis=1), [0.025, 0.975])
+        lo, hi = paired_interval(difference)
         output.append(
             dict(
                 left=left,
