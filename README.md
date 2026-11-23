@@ -4,6 +4,8 @@ An AI-assisted portfolio project that lets intraday rules make simulated decisio
 
 ## What is happening now
 
+[Open the forward journal](forward/) to see the dated observations from GitHub Actions. The hosted runner needs two Alpaca paper-account secrets before it can read the SPY feed. Historical results below use the archived data.
+
 Every eligible SPY session, the paper runner checks two rules using the first 30 minutes of completed market bars.
 
 - **Opening breakout** checks for a green first five minutes, at least average opening volume and a break above the opening high.
@@ -76,7 +78,9 @@ For two language model reviewers, add `--model YOUR_LOCAL_OLLAMA_MODEL --out run
 
 ## Paper watch and later tests
 
-`python -m intraday.paper --watch --data path/to/spy-minute-bars.csv` or `python -m intraday.paper --watch --alpaca iex` watches current data during a running process and stores decisions separately from historical replay. The Alpaca reader uses locally configured `APCA_API_KEY_ID` and `APCA_API_SECRET_KEY` for market data. Start watching before 10:00 New York time. The repository contains runnable simulation code. It has no hosted watcher or broker execution. [Feed schema and fill assumptions](research/data.md)
+`python -m intraday.paper --watch --data path/to/spy-minute-bars.csv` or `python -m intraday.paper --watch --alpaca iex` watches current data during a running process and stores decisions separately from historical replay. The Alpaca reader uses locally configured `APCA_API_KEY_ID` and `APCA_API_SECRET_KEY` for market data. Start watching before 10:00 New York time. The local watcher records a SQLite ledger. The hosted runner records simulated decisions on GitHub. [Feed schema and fill assumptions](research/data.md)
+
+For hands-off operation, add `APCA_API_KEY_ID` and `APCA_API_SECRET_KEY` from an Alpaca paper account to this repository’s **Settings → Secrets and variables → Actions**. Under **Actions → SPY paper journal → Run workflow**, select **check** to verify feed access. Scheduled runs record the morning decisions and settle them after the close. [Hosted schedule and journal fields](forward/)
 
 A follow-up can be registered with `python -m intraday.shadow register --help`. It fixes the candidate, baseline, cohort, end date and implementation fingerprint before the evaluation period. Execute the first registered test once the CSV contains sessions after registration.
 
