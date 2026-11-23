@@ -1,0 +1,39 @@
+{
+  "raw_sha256": "d4671c48d18bdaab21f4b44e02992d2fc91070b01a357189f67b2305a75f9ee6",
+  "protocol_sha256": "2ae8d2debed0dba70b78f649651c4269e425d7551f821cf359ff835ac0324087",
+  "bars": 640753,
+  "source_start": "2019-01-02 09:30:00-05:00",
+  "source_end": "2025-07-18 15:59:00-04:00",
+  "sessions": 1645,
+  "eligible_ballots_checked": 1627,
+  "unresolved_training_outcomes": [
+    "2019-08-12"
+  ],
+  "test_sessions": 263,
+  "first_test": "2024-07-01",
+  "last_test": "2025-07-18",
+  "test_quality": {
+    "ready": 263
+  },
+  "external_round_trips": {
+    "cash": 0,
+    "clock": 263,
+    "breakout": 28,
+    "band": 53,
+    "either": 58,
+    "agreement": 23,
+    "agreement_ml": 0
+  },
+  "fills_match_usd_tolerance": 1e-08,
+  "cross_archive": {
+    "sessions": 989,
+    "first": "2021-01-25",
+    "last": "2024-12-30",
+    "breakout_disagreements": 0,
+    "band_disagreements": 1,
+    "return_gap_pairs": 989,
+    "median_absolute_return_gap_bps": 0.06677842145919044,
+    "p95_absolute_return_gap_bps": 0.1835946561059565,
+    "comparison_sha256": "ab9b2790a7af73a16d9776ad81eefdbd7eb4f456e4b4419a95cd1ba0f0bed8eb"
+  }
+}
