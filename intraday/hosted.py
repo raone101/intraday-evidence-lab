@@ -12,6 +12,7 @@ import time as clock
 import exchange_calendars as xc
 import pandas as pd
 
+from .arena import morning_ballot
 from .activity import sample_sessions
 from .data import NY, load
 from .experiment import P, ROOT
@@ -159,6 +160,14 @@ def collect_open(date, plan, root):
                         recipe_sha256=plan["recipe_sha256"],
                     ),
                 )
+                if now() < entry and not (day / "arena.json").exists():
+                    ballot_packet = morning_ballot(bars, date)
+                    captured = now()
+                    if ballot_packet and captured < entry:
+                        record(
+                            day / "arena.json",
+                            stamp(date, "arena", captured, **ballot_packet),
+                        )
                 return
         clock.sleep(min(10, max(0, (entry - now()).total_seconds())))
     record(
@@ -336,6 +345,16 @@ def collect_close(date, root):
         )
     else:
         result["carry60"] = dict(position=0, net_usd=0)
+    arena = read("arena.json")
+    if arena and result["status"] == "settled":
+        _, cutoff, entry, close = due_times(date)
+        if cutoff <= pd.Timestamp(arena["observed_at"]) < entry:
+            buy = float(data.at[entry, "open"])
+            sell = float(data.at[pd.Timestamp(result["exit_time"]), "open"])
+            result["arena_net_usd"] = {
+                name: paper_net(pos, buy, sell, P["primary_cost_bps_each_side"])
+                for name, pos in arena["positions"].items()
+            }
     record(final, stamp(date, "close", now(), **result))
 
 
