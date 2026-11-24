@@ -2,7 +2,30 @@
 
 An AI-assisted portfolio project that lets intraday rules make simulated decisions, then checks those decisions against the data. Version 2 removes the model veto and adds independent reviewers and research experiments that run alongside the rules.
 
+## Interactive research desk
+
+[Download the interactive desk](https://github.com/raone101/intraday-evidence-lab/raw/refs/heads/main/results/research-desk.html) and open the HTML file in a browser. It includes all 263 historical sessions. Select a strategy, choose how to handle negative signals and adjust the assumed cost per side. To serve the same interface locally, run `python -m intraday.desk` and open `http://127.0.0.1:8765`.
+
+The new signal compares SPY’s 09:59 New York minute close with the arithmetic mean of the previous 60 exchange sessions’ 09:59 closes. Today is excluded. The percentage change is 100 × (current price / prior mean − 1). A missing reference price makes the signal unavailable. The main variant changes position at 10:05 only when two consecutive sessions agree on direction. It holds one virtual share long or short across nights until a confirmed change. Two consecutive zero readings move it to cash. A reversal covers the existing short and buys one long share, or sells the long and opens a short. Both legs incur costs.
+
+| Historical comparison, July 2024 to July 2025 | Net USD at five basis points per side |
+| --- | ---: |
+| Confirmed mean, long or short across days | +17.42 |
+| Confirmed mean, long or cash across days | +52.12 |
+| Buy one share and hold throughout | +86.82 |
+| Prior 60-session mean, long or short for the day only | −209.79 |
+
+The multi-day long/short variant spent 195 sessions long and 68 short, changed position nine times including its first entry, and fell $95.82 from a previous marked portfolio peak. Each day is marked ten minutes before the exchange closes. The last historical position is liquidated at that mark. These are price-based simulations. The adjustment basis of the source archive is unverified. Short availability, borrow fees, cash interest and separate dividend payments are unmodelled. The two-session confirmation is an experimental assumption chosen before running this comparison on a previously used archive.
+
+### Platform connections
+
+- **OpenBB Workspace** can use the running local desk as a custom backend. Connect `http://127.0.0.1:8765` and add the **SPY historical sessions** and **SPY forward journal** table widgets. The latter reads dated files in your checkout. Pull updates to see newly published positions. [OpenBB data integration](https://docs.openbb.co/workspace/developers/data-integration)
+- **Microsoft Qlib** can consume the signal through `python -m intraday.momentum --data data/primary.csv --out runs/sessions.csv --qlib runs/scores.pkl`. Load this locally generated file with `pandas.read_pickle`. Its index is New York local `datetime` and `instrument`, and its `score` is the signed percentage. Qlib users need matching US instrument and calendar data to run a separate backtest. The execution comparison here uses the lab’s simulator. [Qlib signal format](https://qlib.readthedocs.io/en/latest/component/strategy.html)
+- **TradingAgents** is an optional independent market analyst. In a separate environment install the lab dependencies and the [reviewed TradingAgents version](https://github.com/TauricResearch/TradingAgents/tree/9fa1196fffbcfd9de5146d2dd2869df84ab99838) using its installation instructions. Start Ollama, pull a supported local model, then run `python -m intraday.agent_note --date 2024-07-17 --model YOUR_MODEL_TAG --out runs/agent-note.json` from this project. The note pairs the framework’s opinion with the lab’s signal for the same date. Its information sources may include later information, so it is a retrospective qualitative comparison. The experiment and the desk run without an AI API key.
+
 ## What is happening now
+
+[Open the forward journal](forward/) to see the dated observations from GitHub Actions. The hosted runner needs two Alpaca paper-account secrets before it can read the SPY feed. Historical results below use the archived data.
 
 Every eligible SPY session, the paper runner checks two rules using the first 30 minutes of completed market bars.
 
@@ -76,7 +99,9 @@ For two language model reviewers, add `--model YOUR_LOCAL_OLLAMA_MODEL --out run
 
 ## Paper watch and later tests
 
-`python -m intraday.paper --watch --data path/to/spy-minute-bars.csv` or `python -m intraday.paper --watch --alpaca iex` watches current data during a running process and stores decisions separately from historical replay. The Alpaca reader uses locally configured `APCA_API_KEY_ID` and `APCA_API_SECRET_KEY` for market data. Start watching before 10:00 New York time. The repository contains runnable simulation code. It has no hosted watcher or broker execution. [Feed schema and fill assumptions](research/data.md)
+`python -m intraday.paper --watch --data path/to/spy-minute-bars.csv` or `python -m intraday.paper --watch --alpaca iex` watches current data during a running process and stores decisions separately from historical replay. The Alpaca reader uses locally configured `APCA_API_KEY_ID` and `APCA_API_SECRET_KEY` for market data. Start watching before 10:00 New York time. The local watcher records a SQLite ledger. The hosted runner records simulated decisions on GitHub. [Feed schema and fill assumptions](research/data.md)
+
+For hands-off operation, add `APCA_API_KEY_ID` and `APCA_API_SECRET_KEY` from an Alpaca paper account to this repository’s **Settings → Secrets and variables → Actions**. Under **Actions → SPY paper journal → Run workflow**, select **check** to verify feed access. Scheduled runs record the morning decisions and settle them after the close. [Hosted schedule and journal fields](forward/)
 
 A follow-up can be registered with `python -m intraday.shadow register --help`. It fixes the candidate, baseline, cohort, end date and implementation fingerprint before the evaluation period. Execute the first registered test once the CSV contains sessions after registration.
 
