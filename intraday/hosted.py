@@ -16,6 +16,7 @@ from .activity import sample_sessions
 from .data import NY, load
 from .experiment import P, ROOT
 from .feed import FIELDS, fetch_bars
+from .momentum import signals, side, paper_net, confirmed, carry_step
 from .paper import ballot
 from .review import check_packet, packet
 from .shadow import forecasts, recipe_digest
@@ -112,6 +113,7 @@ def collect_open(date, plan, root):
         today = bars_between(opening, cut - pd.Timedelta(minutes=1))
         if not today.empty:
             bars = pd.concat([history, today])
+            capture_momentum(bars, date, day, entry)
             vote = ballot(bars, date, previous)
             observed = now()
             if observed < entry and vote["status"] == "ready":
@@ -163,6 +165,56 @@ def collect_open(date, plan, root):
         decision,
         stamp(date, "decision", now(), status="no timely complete opening", orders=[]),
     )
+
+
+def capture_momentum(bars, date, day, deadline):
+    path = day / "momentum60.json"
+    if path.exists():
+        return
+    changes = signals(bars)
+    if date not in changes.index or pd.isna(changes.at[date, "mean"]):
+        return
+    change = float(changes.at[date, "mean"])
+    observed = now()
+    if observed < deadline:
+        record(
+            path,
+            stamp(
+                date,
+                "momentum60",
+                observed,
+                reference="mean",
+                confirmed_target=confirmed(change, changes["mean"].shift(1).at[date]),
+                change_pct=change,
+                position=side(change),
+            ),
+        )
+
+
+def settle_momentum(bars, date, signal):
+    _, cut, entry, close = due_times(date)
+    if not signal or not cut <= pd.Timestamp(signal["observed_at"]) < entry:
+        return {"status": "no timely signal"}
+    position = signal["position"]
+    if position == 0:
+        return {"status": "flat", "net_usd": 0}
+    if bars.empty or entry not in bars.index:
+        return {"status": "entry bar missing"}
+    exits = bars.loc[
+        (bars.index >= close - pd.Timedelta(minutes=P["exit_minutes_before_close"]))
+        & (bars.index < close)
+    ]
+    if exits.empty:
+        return {"status": "exit bar missing"}
+    return {
+        "status": "settled",
+        "net_usd": paper_net(
+            position,
+            float(bars.at[entry, "open"]),
+            float(exits.open.iloc[0]),
+            P["primary_cost_bps_each_side"],
+        ),
+    }
 
 
 def settlement(bars, date, decision, forecast):
@@ -228,17 +280,62 @@ def collect_close(date, root):
         return json.loads(path.read_text()) if path.exists() else None
 
     decision = read("decision.json")
+    momentum = read("momentum60.json")
+    earlier = sorted(p for p in root.glob("*/close.json") if p.parent.name < date)
+    prior = json.loads(earlier[-1].read_text()).get("carry60", {}) if earlier else {}
+    previous = prior.get("position", 0)
+    # Never jump over a captured instruction whose execution is still unresolved.
+    since = earlier[-1].parent.name if earlier else ""
+    if any(since < p.parent.name < date for p in root.glob("*/momentum60.json")):
+        raise ValueError("A prior captured session still requires settlement.")
     data = (
         bars_between(opening, close - pd.Timedelta(minutes=1))
-        if decision and decision["status"] == "ready"
+        if previous or momentum or (decision and decision["status"] == "ready")
         else pd.DataFrame()
     )
     result = settlement(data, date, decision, read("forecast.json"))
-    if result["status"] in {"entry bar missing", "exit bar missing"}:
+    result["momentum60"] = settle_momentum(data, date, momentum)
+    gaps = {"entry bar missing", "exit bar missing"}
+    if result["status"] in gaps or result["momentum60"]["status"] in gaps:
         record(day / "close-gap.json", stamp(date, "close", now(), **result))
         raise ValueError(
             "Settlement bars missing. A later close run may resolve the gap."
         )
+    target = momentum.get("confirmed_target") if momentum else None
+    target = previous if target is None else target
+    if previous or target:
+        _, _, entry, close = due_times(date)
+        marks = (
+            data.loc[
+                (
+                    data.index
+                    >= close - pd.Timedelta(minutes=P["exit_minutes_before_close"])
+                )
+                & (data.index < close)
+            ]
+            if not data.empty
+            else data
+        )
+        if marks.empty or entry not in data.index:
+            raise ValueError("Missing multi-day ledger valuation.")
+        mark = float(marks.open.iloc[0])
+        liquidate = date == json.loads(PLAN.read_text())["through"]
+        gross, cost = carry_step(
+            previous,
+            target,
+            float(data.at[entry, "open"]),
+            mark,
+            prior.get("mark", 0),
+            liquidate,
+        )
+        result["carry60"] = dict(
+            position=0 if liquidate else target,
+            mark=mark,
+            net_usd=gross - cost * P["primary_cost_bps_each_side"],
+            previous_position=previous,
+        )
+    else:
+        result["carry60"] = dict(position=0, net_usd=0)
     record(final, stamp(date, "close", now(), **result))
 
 
@@ -266,7 +363,9 @@ def main():
     if args.stage == "open":
         collect_open(date, plan, JOURNAL)
     else:
-        for pending in sorted(JOURNAL.glob("*/decision.json")):
+        for pending in sorted(
+            {*JOURNAL.glob("*/decision.json"), *JOURNAL.glob("*/momentum60.json")}
+        ):
             session = pending.parent.name
             if (
                 plan["after"] < session < date

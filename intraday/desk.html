@@ -1,0 +1,37 @@
+<!doctype html><html lang="en-GB"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SPY research desk</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f3ed;color:#162f2c;font:16px system-ui}main{max-width:1080px;margin:auto;padding:32px 5vw}header{border-bottom:2px solid;padding:20px 0}h1{font:normal clamp(40px,7vw,76px) Georgia;margin:8px 0}h2{font:normal 27px Georgia;margin:22px 0 12px}p{line-height:1.55}fieldset{border:0;padding:18px 0;display:flex;flex-wrap:wrap;gap:14px}label{display:grid;gap:5px;font-size:14px}select,input{padding:9px;border:1px solid #839590;background:#fff;font:inherit;color:inherit;border-radius:4px}.metrics{display:flex;gap:35px;padding:16px 0;flex-wrap:wrap}.metrics b{display:block;font:normal 32px Georgia}.chart{background:#163935;color:#fff;border-radius:8px;padding:14px}svg{display:block;width:100%;height:165px}.scroll{overflow:auto;max-height:340px}table{width:100%;border-collapse:collapse;background:white;font-variant-numeric:tabular-nums}th,td{text-align:right;padding:9px;border-bottom:1px solid #ddd;white-space:nowrap}th{position:sticky;top:0;background:#e3e9e2}th:first-child,td:first-child{text-align:left}
+</style><main><header><h1>SPY research desk</h1><p>Historical paper trades · One virtual share · July 2024 to July 2025</p></header>
+<fieldset><label>Strategy<select id="rule"><option value="carry">Confirmed 60-session mean · hold across days</option><option value="hold">Hold one share throughout</option><option value="endpoint">60 sessions ago</option><option value="mean">Average of prior 60 sessions</option><option value="agreement">Both opening rules agree</option><option value="breakout">Opening breakout</option><option value="band">Noise band</option><option value="clock">Buy every eligible day</option><option value="cash">Cash</option></select></label><label>Negative momentum<select id="negative"><option value="-1">Short one share</option><option value="0">Stay in cash</option></select></label><label>Cost per side (basis points)<input type="number" min="0" max="100" step="1" value="5" id="fee"></label></fieldset>
+<div class="metrics"><span>Net result<b id="net"></b></span><span>Long sessions<b id="longs"></b></span><span>Short sessions<b id="shorts"></b></span><span>Missing sessions<b id="missing"></b></span></div>
+<div class="chart">Cumulative net result (USD)<svg viewBox="0 0 900 160" preserveAspectRatio="none" role="img" aria-label="Cumulative simulated profit and loss"><line id="zero" x1="0" x2="900" stroke="#688c83"/><polyline id="curve" fill="none" stroke="#a9efb4" stroke-width="3" vector-effect="non-scaling-stroke"/></svg><span id="range"></span></div>
+<h2>Session journal</h2><div class="scroll"><table><thead><tr><th>Date</th><th>Change (%)</th><th>Position</th><th>Net USD</th></tr></thead><tbody id="body"></tbody></table></div><p>Momentum uses the 09:59 New York minute close. The confirmed rule changes position at 10:05 after two consecutive signals of the same sign. It can hold overnight. Each session is marked ten minutes before the close. The last historical position is closed at that mark. The single-day variants exit at the daily mark. Short sessions assume availability and exclude borrowing fees.</p></main>
+<script>
+const data=/*DATA*/[];
+const el=id=>document.getElementById(id);
+function draw(){
+ const rule=el('rule').value, mom=['endpoint','mean'].includes(rule), cost=el('fee').valueAsNumber;
+ el('negative').disabled=!mom && rule!=='carry';
+ if(!Number.isFinite(cost)||!el('fee').checkValidity()){el('fee').reportValidity();return}
+ let total=0,longs=0,shorts=0,missing=0;
+ const series=[0],journal=[];
+ for(const r of data){
+  const multi=rule==="carry"||rule==="hold";
+  const key=rule==="carry" && el("negative").value==="0"?"carry_cash":rule;
+  const change=rule==="carry"?r.mean:mom?r[rule]:null;
+  const flags={agreement:r.breakout&&r.band,breakout:r.breakout,band:r.band,clock:true,cash:false};
+  const pos=multi?r[key+"_pos"]:mom?(change===null?null:change>0?1:change<0?Number(el('negative').value):0):(r.eligible?Number(flags[rule]):null);
+  const valid=pos!==null&&(pos===0||(r.move_usd!==null&&r.one_bp_cost!==null));
+  const pnl=multi?r[key+"_gross"]-cost*r[key+"_fee"]:valid?(pos===0?0:pos*r.move_usd-Math.abs(pos)*cost*r.one_bp_cost):null;
+  if(valid){total+=pnl;longs+=pos===1;shorts+=pos===-1}else{missing++}
+  series.push(total);
+  journal.push('<tr><td>'+r.date+'</td><td>'+(change===null?'':change.toFixed(2))+'</td><td>'+(pos===null?'Missing':pos===1?'Long':pos===-1?'Short':'Cash')+'</td><td>'+(valid?pnl.toFixed(2):'Missing')+'</td></tr>');
+ }
+ const lo=Math.min(...series),hi=Math.max(...series),y=v=>hi===lo?80:150-140*(v-lo)/(hi-lo);
+ el('net').textContent=total.toLocaleString('en-US',{style:'currency',currency:'USD'});el('longs').textContent=longs;el('shorts').textContent=shorts;el('missing').textContent=missing;
+ el('curve').setAttribute('points',series.map((v,i)=>[900*i/(series.length-1),y(v)].join(',')).join(' '));
+ for(const a of ['y1','y2'])el('zero').setAttribute(a,y(0));
+ el('range').textContent='Low $'+lo.toFixed(2)+'  ·  High $'+hi.toFixed(2);el('body').innerHTML=journal.reverse().join('');
+}
+document.querySelectorAll('select,input').forEach(n=>n.addEventListener('input',draw));draw();
+</script></html>
