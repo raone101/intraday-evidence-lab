@@ -4,7 +4,7 @@ An AI-assisted portfolio project that lets intraday rules make simulated decisio
 
 ## Replay a disagreement
 
-[Download the strategy arena](https://github.com/raone101/intraday-evidence-lab/raw/refs/heads/main/arena/arena.html), open it in a browser, choose a session and reveal the outcome after reading the votes. On 11 July 2024 the breakout bot saw a price above the opening range on above-average volume. The VWAP bot saw a price 2.56 standard deviations above the morning average and went short. Neither needed permission from the other. [Experiment notes and research lineage](arena/README.md) · [All session decisions](arena/sessions.csv)
+[Download the strategy arena](https://github.com/raone101/intraday-evidence-lab/raw/refs/heads/main/arena/arena.html), open it in a browser, choose a session and reveal the outcome after reading the votes. On 11 July 2024 the breakout bot saw a price above the opening range on above-average volume. The VWAP bot saw a price 2.56 standard deviations above the morning average and went short. The weighted vote selected the long. Reveal the outcome to see how each original idea performed, how far it beat or trailed the selected position and what happened to its voting power. [Experiment notes and research lineage](arena/README.md) · [All session decisions](arena/sessions.csv)
 
 ## Interactive research desk
 
