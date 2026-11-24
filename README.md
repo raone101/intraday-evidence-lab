@@ -2,6 +2,10 @@
 
 An AI-assisted portfolio project that lets intraday rules make simulated decisions, then checks those decisions against the data. Version 2 removes the model veto and adds independent reviewers and research experiments that run alongside the rules.
 
+## Replay a disagreement
+
+[Download the strategy arena](https://github.com/raone101/intraday-evidence-lab/raw/refs/heads/main/arena/arena.html), open it in a browser, choose a session and reveal the outcome after reading the votes. On 11 July 2024 the breakout bot saw a price above the opening range on above-average volume. The VWAP bot saw a price 2.56 standard deviations above the morning average and went short. Neither needed permission from the other. [Experiment notes and research lineage](arena/README.md) · [All session decisions](arena/sessions.csv)
+
 ## Interactive research desk
 
 [Download the interactive desk](https://github.com/raone101/intraday-evidence-lab/raw/refs/heads/main/results/research-desk.html) and open the HTML file in a browser. It includes all 263 historical sessions. Select a strategy, choose how to handle negative signals and adjust the assumed cost per side. To serve the same interface locally, run `python -m intraday.desk` and open `http://127.0.0.1:8765`.
