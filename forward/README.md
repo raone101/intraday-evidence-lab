@@ -5,9 +5,12 @@ The first eligible session is 24 November 2026. The registered observation perio
 | File | What it tells you |
 | --- | --- |
 | `decision.json` | Which variants qualified before 10:05 New York, their opening features, and the actual recording time |
+| `momentum60.json` | Percentage above or below the previous 60 same-time prices’ average, daily position and two-session confirmed target. A null target holds the previous position. |
 | `forecast.json` | The two frozen probabilities from the registered model comparison, plus the latest training date |
 | `close.json` | The simulated return of each participating variant after assumed costs, a check of the flags, and each available forecast's squared probability error |
 | `close-gap.json` | A dated attempt with a missing entry or exit. A later close file can resolve the gap |
+
+The close record also carries `carry60`, the marked profit or loss and position of the separate multi-day strategy, including overnight price changes and turnover. The final scheduled session closes any remaining position.
 
 The two forecasts estimate whether a one-share position from 10:05 to 10:20 earns a positive return after costs. The paper rules hold until ten minutes before the exchange closes. The two outcomes answer different questions.
 
