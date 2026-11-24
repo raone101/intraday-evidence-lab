@@ -1,12 +1,18 @@
 # Intraday evidence lab
 
-An AI-assisted portfolio project that lets intraday rules make simulated decisions, then checks those decisions against the data. Version 2 removes the model veto and adds independent reviewers and research experiments that run alongside the rules.
+An AI-assisted research project comparing intraday trading hypotheses on historical market data and recording forward paper decisions on SPY.
 
-## Replay a disagreement
+## Cross-market strategy arena
+
+[Explore the 23-strategy arena](crossmarket/README.md) across equities, ETFs, options, index and gold futures, FX and crypto. Each strategy records its own call before the simulated fill. The replay reveals realised voting weights, dissenting calls and the difference each decision made after costs. The 60-session comparison and overnight behaviour are inputs to two specialists. [Download the interactive replay](https://github.com/raone101/intraday-evidence-lab/raw/refs/heads/main/crossmarket/replay.html) · [Inspect results by instrument](crossmarket/coverage.csv) · [Inspect each strategy](crossmarket/strategies.csv)
+
+## Earlier four-strategy SPY experiment
 
 [Download the strategy arena](https://github.com/raone101/intraday-evidence-lab/raw/refs/heads/main/arena/arena.html), open it in a browser, choose a session and reveal the outcome after reading the votes. On 11 July 2024 the breakout bot saw a price above the opening range on above-average volume. The VWAP bot saw a price 2.56 standard deviations above the morning average and went short. The weighted vote selected the long. Reveal the outcome to see how each original idea performed, how far it beat or trailed the selected position and what happened to its voting power. [Experiment notes and research lineage](arena/README.md) · [All session decisions](arena/sessions.csv)
 
-## Interactive research desk
+<details>
+<summary>Earlier SPY research desk, 60-session study and platform connections</summary>
+
 
 [Download the interactive desk](https://github.com/raone101/intraday-evidence-lab/raw/refs/heads/main/results/research-desk.html) and open the HTML file in a browser. It includes all 263 historical sessions. Select a strategy, choose how to handle negative signals and adjust the assumed cost per side. To serve the same interface locally, run `python -m intraday.desk` and open `http://127.0.0.1:8765`.
 
@@ -27,7 +33,9 @@ The multi-day long/short variant spent 195 sessions long and 68 short, changed p
 - **Microsoft Qlib** can consume the signal through `python -m intraday.momentum --data data/primary.csv --out runs/sessions.csv --qlib runs/scores.pkl`. Load this locally generated file with `pandas.read_pickle`. Its index is New York local `datetime` and `instrument`, and its `score` is the signed percentage. Qlib users need matching US instrument and calendar data to run a separate backtest. The execution comparison here uses the lab’s simulator. [Qlib signal format](https://qlib.readthedocs.io/en/latest/component/strategy.html)
 - **TradingAgents** is an optional independent market analyst. In a separate environment install the lab dependencies and the [reviewed TradingAgents version](https://github.com/TauricResearch/TradingAgents/tree/9fa1196fffbcfd9de5146d2dd2869df84ab99838) using its installation instructions. Start Ollama, pull a supported local model, then run `python -m intraday.agent_note --date 2024-07-17 --model YOUR_MODEL_TAG --out runs/agent-note.json` from this project. The note pairs the framework’s opinion with the lab’s signal for the same date. Its information sources may include later information, so it is a retrospective qualitative comparison. The experiment and the desk run without an AI API key.
 
-## What is happening now
+</details>
+
+## Forward observations
 
 [Open the forward journal](forward/) to see the dated observations from GitHub Actions. The hosted runner needs two Alpaca paper-account secrets before it can read the SPY feed. Historical results below use the archived data.
 
