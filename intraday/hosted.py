@@ -12,6 +12,8 @@ import time as clock
 import exchange_calendars as xc
 import pandas as pd
 
+from crossmarket import forward as wide
+
 from .arena import morning_ballot
 from .voting import freeze, settle, settled_record
 from .activity import sample_sessions
@@ -115,6 +117,12 @@ def collect_open(date, plan, root):
         today = bars_between(opening, cut - pd.Timedelta(minutes=1))
         if not today.empty:
             bars = pd.concat([history, today])
+            wide_path = day / "crossmarket.json"
+            if not wide_path.exists() and now() < cut + pd.Timedelta(minutes=1):
+                wide_packet = wide.morning(bars, date, root)
+                seen = now()
+                if wide_packet and seen < cut + pd.Timedelta(minutes=1):
+                    record(wide_path, stamp(date, "crossmarket", seen, **wide_packet))
             capture_momentum(bars, date, day, entry)
             vote = ballot(bars, date, previous)
             observed = now()
@@ -302,12 +310,23 @@ def collect_close(date, root):
     since = earlier[-1].parent.name if earlier else ""
     if any(since < p.parent.name < date for p in root.glob("*/momentum60.json")):
         raise ValueError("A prior captured session still requires settlement.")
+    wide_packet = read("crossmarket.json")
     data = (
         bars_between(opening, close - pd.Timedelta(minutes=1))
-        if previous or momentum or (decision and decision["status"] == "ready")
+        if previous
+        or momentum
+        or wide_packet
+        or (decision and decision["status"] == "ready")
         else pd.DataFrame()
     )
     result = settlement(data, date, decision, read("forecast.json"))
+    if wide_packet:
+        result["crossmarket"] = wide.close(data, date, wide_packet)
+        if result["crossmarket"]["status"] == "missing settlement prices":
+            record(
+                day / "crossmarket-gap.json",
+                stamp(date, "close", now(), **result["crossmarket"]),
+            )
     result["momentum60"] = settle_momentum(data, date, momentum)
     gaps = {"entry bar missing", "exit bar missing"}
     if result["status"] in gaps or result["momentum60"]["status"] in gaps:
