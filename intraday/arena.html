@@ -2,8 +2,8 @@
 <style>*{box-sizing:border-box}body{margin:0;background:#f1efe7;color:#173735;font:16px system-ui}main{max-width:1000px;margin:auto;padding:36px 5vw}h1{font:normal clamp(44px,7vw,74px) Georgia;margin:10px 0}h2{font:normal 28px Georgia}header{border-bottom:2px solid;padding-bottom:16px}select,button{background:white;padding:9px;color:inherit;font:inherit;border:1px solid #889b90;border-radius:4px}fieldset{border:0;padding:12px 0;display:flex;flex-wrap:wrap;gap:14px;align-items:center}table{border-collapse:collapse;width:100%;background:#fff}td,th{padding:9px;text-align:left;border-bottom:1px solid #d1d9d4}#out{background:#163b37;color:white;padding:16px;margin:12px 0}p{line-height:1.55}</style>
 <main><header><h1>SPY strategy arena</h1><p>Replay the 10:00 New York decision. Inspect each bot’s evidence before revealing the simulated trade.</p></header>
 <fieldset><label>Show <select id="filter"><option value="dispute">Opposing votes</option><option value="all">All sessions</option></select></label><label>Session <select id="day"></select></label></fieldset>
-<table><thead><tr><th>Bot</th><th>Vote</th><th>Opening evidence</th></tr></thead><tbody id="votes"></tbody></table>
-<p id="decision"></p><button id="reveal">Reveal outcome</button><div id="out" hidden></div>
+<table><thead><tr><th>Bot</th><th>Vote</th><th>Voting power</th><th>Opening evidence</th></tr></thead><tbody id="votes"></tbody></table>
+<p id="decision"></p><button id="reveal">Reveal outcome</button><div id="out" hidden><p id="picked"></p><table style="color:#173735"><thead><tr><th>Original idea</th><th>Net USD</th><th>Difference from selected (USD)</th><th>Next weight</th></tr></thead><tbody id="scores"></tbody></table></div>
 <h2>Strategy comparisons</h2><p>Each book trades separately. Pair rows trade only on same-direction agreement. Costs assume 0.05% on each side.</p>
 <table><thead><tr><th>Strategy</th><th>Trades</th><th>Gross USD</th><th>Net USD</th></tr></thead><tbody id="summary"></tbody></table></main>
 <script>
@@ -17,11 +17,13 @@ function show(){const x=selected();if(!x)return;const evidence=[
  'Swept high: '+x.swept_high+'. Swept low: '+x.swept_low+'. Closed inside: '+x.inside+'.',
  'Price was '+fmt(x.vwap_z)+' volume-weighted standard deviations from opening VWAP.',
  'Predicted move '+fmt(x.forecast_bps)+' basis points. Trained through '+x.trained_through+'.'];
- el('votes').replaceChildren(...bots.map((b,i)=>row([b,pos(x[b]),evidence[i]])));
- el('decision').textContent='Two net votes: '+pos(x['Two net votes'])+'. Each bot also keeps its own paper trade.';
+ el('votes').replaceChildren(...bots.map((b,i)=>row([b,pos(x[b]),replay.voting[x.date].bots[b].before.toFixed(3),evidence[i]])));
+ el('decision').textContent='Weighted paper decision: '+pos(x['Weighted vote'])+' · Equal-weight decision: '+pos(x['Equal active vote'])+'. At least two directional votes required.';
  el('out').hidden=true;el('reveal').textContent='Reveal outcome'}
 function dates(){let days=replay.sessions.filter(x=>el('filter').value==='all'||x.dispute);el('day').replaceChildren(...days.map(x=>new Option(x.date,x.date)));show()}
-el('filter').onchange=dates;el('day').onchange=show;el('reveal').onclick=()=>{let x=selected();if(!x)return;let p=b=>x[b]*(x.exit-x.entry)-Math.abs(x[b])*(x.exit+x.entry)*0.0005;
- el('out').textContent='Entry $'+fmt(x.entry)+' · Exit $'+fmt(x.exit)+' · '+[...bots,'Two net votes'].map(b=>b+' $'+fmt(p(b))).join('  |  ');el('out').hidden=!el('out').hidden;el('reveal').textContent=el('out').hidden?'Reveal outcome':'Hide outcome'};
+el('filter').onchange=dates;el('day').onchange=show;el('reveal').onclick=()=>{let x=selected();if(!x)return;const d=replay.voting[x.date];
+ el('picked').textContent='Selected '+pos(d.selected)+': $'+fmt(d.selected_net_usd)+' net · Entry $'+fmt(x.entry)+' · Exit $'+fmt(x.exit);
+ el('scores').replaceChildren(...bots.map(b=>{const a=d.bots[b];return row([b+' · '+pos(a.call),fmt(a.net_usd),fmt(a.delta_usd),a.after.toFixed(3)])}));
+ el('out').hidden=!el('out').hidden;el('reveal').textContent=el('out').hidden?'Reveal outcome':'Hide outcome'};
 el('summary').replaceChildren(...replay.summary.map(x=>row([x.strategy,x.trades,fmt(x.gross_usd),fmt(x.net_usd)])));dates();
 </script></html>

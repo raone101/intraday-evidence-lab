@@ -15,7 +15,8 @@ from .activity import PROFILE, sample_sessions
 from .data import load
 from .experiment import FEATURES, P, session_rows
 
-BOTS = ("Breakout", "Failed break", "VWAP fade", "Profile model")
+from .voting import BOTS, fresh_record, freeze, settle
+
 START, END = P["historical_test_start"], P["source_end"]
 
 
@@ -129,6 +130,15 @@ def run(bars):
         )
     v = votes(test)
     books = combinations_book(v)
+    history = fresh_record()
+    ledger = {}
+    for date, row in test.iterrows():
+        ballot = freeze(v.loc[date], history)
+        ledger[date] = settle(
+            ballot, row.entry, row.exit, P["primary_cost_bps_each_side"], history
+        )
+    books["Weighted vote"] = [r["selected"] for r in ledger.values()]
+    books["Equal active vote"] = [r["equal"] for r in ledger.values()]
     gross = books.mul(test.exit - test.entry, axis=0)
     costs = books.abs().mul(
         (test.entry + test.exit) * P["primary_cost_bps_each_side"] / 10000, axis=0
@@ -159,7 +169,7 @@ def run(bars):
     ].join(books)
     journal["dispute"] = (v.min(axis=1) < 0) & (v.max(axis=1) > 0)
     journal.index.name = "date"
-    return journal, summary.rename_axis("strategy")
+    return journal, summary.rename_axis("strategy"), ledger
 
 
 def main():
@@ -167,13 +177,26 @@ def main():
     p.add_argument("--data", type=Path, required=True)
     p.add_argument("--out", type=Path, required=True)
     args = p.parse_args()
-    journal, summary = run(load(args.data))
+    journal, summary, ledger = run(load(args.data))
     args.out.mkdir(parents=True, exist_ok=True)
     journal.to_csv(args.out / "sessions.csv")
     summary.to_csv(args.out / "summary.csv")
+    rows = [
+        dict(
+            date=date,
+            bot=b,
+            selected=d["selected"],
+            selected_net_usd=d["selected_net_usd"],
+            **audit,
+        )
+        for date, d in ledger.items()
+        for b, audit in d["bots"].items()
+    ]
+    pd.DataFrame(rows).to_csv(args.out / "vote-audit.csv", index=False)
     page = Path(__file__).with_name("arena.html").read_text()
     payload = {
         "sessions": json.loads(journal.reset_index().to_json(orient="records")),
+        "voting": ledger,
         "summary": json.loads(summary.reset_index().to_json(orient="records")),
     }
     (args.out / "arena.html").write_text(

@@ -13,6 +13,7 @@ import exchange_calendars as xc
 import pandas as pd
 
 from .arena import morning_ballot
+from .voting import freeze, settle, settled_record
 from .activity import sample_sessions
 from .data import NY, load
 from .experiment import P, ROOT
@@ -162,6 +163,10 @@ def collect_open(date, plan, root):
                 )
                 if now() < entry and not (day / "arena.json").exists():
                     ballot_packet = morning_ballot(bars, date)
+                    if ballot_packet:
+                        ballot_packet["voting"] = freeze(
+                            ballot_packet["positions"], settled_record(root)
+                        )
                     captured = now()
                     if ballot_packet and captured < entry:
                         record(
@@ -355,6 +360,14 @@ def collect_close(date, root):
                 name: paper_net(pos, buy, sell, P["primary_cost_bps_each_side"])
                 for name, pos in arena["positions"].items()
             }
+            if "voting" in arena:
+                result["voting"] = settle(
+                    arena["voting"],
+                    buy,
+                    sell,
+                    P["primary_cost_bps_each_side"],
+                    settled_record(root),
+                )
     record(final, stamp(date, "close", now(), **result))
 
 
