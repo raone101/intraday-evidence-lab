@@ -1,0 +1,130 @@
+{
+  "primary.csv": {
+    "url": "https://media.githubusercontent.com/media/Ascensao/Intraday-momentum-strategy/5a9e956994d1ca9ef16e5e0ae6af4ce4e04e87eb/spy_intra_data.csv",
+    "sha256": "d4671c48d18bdaab21f4b44e02992d2fc91070b01a357189f67b2305a75f9ee6"
+  },
+  "option.zip": {
+    "url": "https://raw.githubusercontent.com/QuantConnect/Lean/32a302a9a0fde64c0435798c0c4cb2c2309873ed/Data/option/usa/minute/aapl/20140606_quote_american.zip",
+    "sha256": "ab5e49547d839d26729c2f7c48636221bd0d2c70e22511e2cca0c6f4aade7bda"
+  },
+  "TSLA.zip": {
+    "url": "https://x01.frd-data.com/firstratedata_sample_TSLA.zip",
+    "sha256": "37ddec609a67e42a96faf3c0ba3907411a356cb2b1e92afe2bf6e21d617164eb"
+  },
+  "NVDA.zip": {
+    "url": "https://x01.frd-data.com/firstratedata_sample_NVDA.zip",
+    "sha256": "8ff3afff0ac6c00acd078820d0fc5118c1e4e5377911c5bcbf73ed6f009f0ab1"
+  },
+  "AAPL.zip": {
+    "url": "https://x01.frd-data.com/firstratedata_sample_AAPL.zip",
+    "sha256": "f394cc76e2eb0ec7a73d99d546d6593baf017245ef89fb69d1a0a2176ecd6c48"
+  },
+  "AMZN.zip": {
+    "url": "https://x01.frd-data.com/firstratedata_sample_AMZN.zip",
+    "sha256": "f4269f62b6842871b6b26dca600f5b8dd1b1b80081de700327519bed41152576"
+  },
+  "META.zip": {
+    "url": "https://x01.frd-data.com/firstratedata_sample_META.zip",
+    "sha256": "b7bce8abf10a6e0a42c4c67deb6ececd97a017edccb3a49daa232dc817f5ef02"
+  },
+  "MSFT.zip": {
+    "url": "https://x01.frd-data.com/firstratedata_sample_MSFT.zip",
+    "sha256": "253a7b0071eaedcd2883cbe7fb37c798eaaaad21adb846081bfcc1b20d27be99"
+  },
+  "NFLX.zip": {
+    "url": "https://x01.frd-data.com/firstratedata_sample_NFLX.zip",
+    "sha256": "9d91c7c6a1fa23068163e704231fbf7c6a2fa49abbe648ce072a9022850bd83c"
+  },
+  "F.zip": {
+    "url": "https://x01.frd-data.com/firstratedata_sample_F.zip",
+    "sha256": "66e5eb9dffa1ea6ceafecbd68169b4cb59b28260c40b0ba5a50156076b6e822c"
+  },
+  "QQQ.zip": {
+    "url": "https://x01.frd-data.com/firstratedata_sample_QQQ.zip",
+    "sha256": "33a31eba9c4378ef5d12d4cad522d74e2ffa9e7e5c9b966a7ea12d500eb608af"
+  },
+  "futures_ES.zip": {
+    "url": "https://x01.frd-data.com/firstratedata_sample_futures_ES.zip",
+    "sha256": "c46e922990a94c2059dc701486f6202a99dafd0d48e57323a40d0f1a065ee7a0"
+  },
+  "futures_NQ.zip": {
+    "url": "https://x01.frd-data.com/firstratedata_sample_futures_NQ.zip",
+    "sha256": "a7461fa14412496c801b397eb2f7f85a8729a10c147f5148e8d7082075832f0e"
+  },
+  "futures_GC.zip": {
+    "url": "https://x01.frd-data.com/firstratedata_sample_futures_GC.zip",
+    "sha256": "0784086ac8845ba48e694682d2ebb1e1df9220d4c9941bd89235982e4198c87c"
+  },
+  "EURUSD-24.gz": {
+    "url": "https://candledata.fxcorporate.com/m1/EURUSD/2020/24.csv.gz",
+    "sha256": "9991481d6da89965f80cc677a21911f100b1402f82e409cebd39c5c4f64eccdb"
+  },
+  "EURUSD-25.gz": {
+    "url": "https://candledata.fxcorporate.com/m1/EURUSD/2020/25.csv.gz",
+    "sha256": "6cd4b0557ed3dc53fe59efe3152756aa439db6c8d5e9320a119632b95635d068"
+  },
+  "EURUSD-26.gz": {
+    "url": "https://candledata.fxcorporate.com/m1/EURUSD/2020/26.csv.gz",
+    "sha256": "a31ab92c2d2d57c0e00f6cde464044a25c08e8d07ab5d175efa4416e3cad3cd7"
+  },
+  "EURUSD-27.gz": {
+    "url": "https://candledata.fxcorporate.com/m1/EURUSD/2020/27.csv.gz",
+    "sha256": "640b0781cedd4197a92069a888d4153409e9e311c64e6fefc7a910ba8bdcca33"
+  },
+  "GBPUSD-24.gz": {
+    "url": "https://candledata.fxcorporate.com/m1/GBPUSD/2020/24.csv.gz",
+    "sha256": "f7f4567ad5220ee80312fcc4e6ad8f4c00e437070bc196cc191fd0421b452e76"
+  },
+  "GBPUSD-25.gz": {
+    "url": "https://candledata.fxcorporate.com/m1/GBPUSD/2020/25.csv.gz",
+    "sha256": "9e29caf58be301ee1403e3589a3cc43e3395bff0a15891aa668fdd7748c42685"
+  },
+  "GBPUSD-26.gz": {
+    "url": "https://candledata.fxcorporate.com/m1/GBPUSD/2020/26.csv.gz",
+    "sha256": "319b91d8edcfd4e9e187fad51b958c4e0a5ed54f50db9cd0eae4c5e67131858d"
+  },
+  "GBPUSD-27.gz": {
+    "url": "https://candledata.fxcorporate.com/m1/GBPUSD/2020/27.csv.gz",
+    "sha256": "67df77edf185dc8e7c8cc6e3649788d2a08e0e278f71263ee296a0f1a002da7a"
+  },
+  "USDJPY-24.gz": {
+    "url": "https://candledata.fxcorporate.com/m1/USDJPY/2020/24.csv.gz",
+    "sha256": "a8e61ade5896c3f02778374cbe9d2511d6af30a93cc7671e7ffc9466dc7fc3a4"
+  },
+  "USDJPY-25.gz": {
+    "url": "https://candledata.fxcorporate.com/m1/USDJPY/2020/25.csv.gz",
+    "sha256": "d3adaccc44563188fca692d43a352ddf116ccd9d95b376197df0b05965073699"
+  },
+  "USDJPY-26.gz": {
+    "url": "https://candledata.fxcorporate.com/m1/USDJPY/2020/26.csv.gz",
+    "sha256": "90bf34f033557fd85f3915c91682027fa97b4572df6ecec1aad30415f5a35d59"
+  },
+  "USDJPY-27.gz": {
+    "url": "https://candledata.fxcorporate.com/m1/USDJPY/2020/27.csv.gz",
+    "sha256": "6a150564c2ac1a13f2d03fdf30307773dad482b51e7ad3be180fc2b2e6ed1eca"
+  },
+  "BTCUSDT-2025-04.zip": {
+    "url": "https://data.binance.vision/data/spot/monthly/klines/BTCUSDT/1m/BTCUSDT-1m-2025-04.zip",
+    "sha256": "4103d48887f9f5ec04144b190314ec31db9e3094674e5d53a3436b338854848f"
+  },
+  "BTCUSDT-2025-05.zip": {
+    "url": "https://data.binance.vision/data/spot/monthly/klines/BTCUSDT/1m/BTCUSDT-1m-2025-05.zip",
+    "sha256": "7f95bf97e3ccfbb55cd002f124a54dc1726ced7cfd54e6fd200e59845ca95d5c"
+  },
+  "BTCUSDT-2025-06.zip": {
+    "url": "https://data.binance.vision/data/spot/monthly/klines/BTCUSDT/1m/BTCUSDT-1m-2025-06.zip",
+    "sha256": "f95f6169e253d38fb321c87984c827878634250cdcc3ff84fc3507f036bcabbd"
+  },
+  "ETHUSDT-2025-04.zip": {
+    "url": "https://data.binance.vision/data/spot/monthly/klines/ETHUSDT/1m/ETHUSDT-1m-2025-04.zip",
+    "sha256": "32505b36565f7c446a3946dc6ea2f511e71d0f72c13cca2b09bb83307f198f8e"
+  },
+  "ETHUSDT-2025-05.zip": {
+    "url": "https://data.binance.vision/data/spot/monthly/klines/ETHUSDT/1m/ETHUSDT-1m-2025-05.zip",
+    "sha256": "743268912388656e3c53d21e6e4b6c2b155c1b1f67c7bcbdae5e14cc3d9c633c"
+  },
+  "ETHUSDT-2025-06.zip": {
+    "url": "https://data.binance.vision/data/spot/monthly/klines/ETHUSDT/1m/ETHUSDT-1m-2025-06.zip",
+    "sha256": "eb7641c42f642697524ce45f64c92bcc33a751b6ade791f91f70e3ec52880a70"
+  }
+}

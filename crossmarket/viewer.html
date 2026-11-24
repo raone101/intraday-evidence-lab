@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Cross-market strategy replay</title>
+<style>body{max-width:900px;margin:3rem auto;padding:0 1rem;background:#112029;color:#e4eced;font:16px system-ui}h1{font-size:2rem}select,button{font:inherit;padding:.5rem;background:#e1eeea;color:#122b30;border:0;border-radius:4px;margin:.25rem}table{width:100%;border-collapse:collapse}th,td{text-align:right;padding:.45rem;border-bottom:1px solid #395059}th:first-child,td:first-child{text-align:left}main{overflow-x:auto}p{color:#cedfdd}</style>
+<h1>Cross-market strategy replay</h1><label>Instrument <select id="instrument"></select></label> <label>Session <select id="session"></select></label> <button id="reveal">Reveal outcome</button><p id="decision"></p><main><table><thead><tr><th>Strategy</th><th>Original call</th><th>Weight</th><th>Net bp</th><th>Versus selected bp</th><th>Next weight</th></tr></thead><tbody></tbody></table></main>
+<script>
+(async()=>{
+ const el=id=>document.getElementById(id), bytes=x=>Uint8Array.from(atob(x),c=>c.charCodeAt(0));
+ const votesText=await new Response(new Blob([bytes('VOTES_PAYLOAD')]).stream().pipeThrough(new DecompressionStream('gzip'))).text();
+ const parse=text=>{const [header,...rows]=text.trim().split(/\r?\n/);const keys=header.split(',');return rows.map(line=>Object.fromEntries(line.split(',').map((v,i)=>[keys[i],v])))};
+ const votes=parse(votesText),days=parse(new TextDecoder().decode(bytes('SESSION_PAYLOAD')));
+ const symbol=el('instrument'),day=el('session'),button=el('reveal'),body=document.querySelector('tbody');
+ const options=(select,values)=>select.replaceChildren(...values.map(v=>new Option(v,v)));
+ const label=v=>v===''?'Unavailable':+v===1?'Buy':+v===-1?'Short / bearish':'Flat';
+ const num=v=>v===''?'Unresolved':Number(v).toFixed(2);
+ let show=false;
+ function draw(){const d=days.find(r=>r.symbol===symbol.value&&r.date===day.value);
+ el('decision').textContent='Weighted decision: '+label(d.weighted)+'. Equal vote: '+label(d.equal)+'.'+(show?' Weighted outcome: '+num(d.weighted_bps)+' bp. Equal vote: '+num(d.equal_bps)+' bp.':'');
+ body.replaceChildren(); for(const r of votes.filter(v=>v.symbol===symbol.value&&v.date===day.value)){const tr=body.insertRow();const call=label(r.forecast)+(r.forecast!=='' && +r.forecast<0 && +r.position===0?' (cash)':'');for(const value of [r.strategy,call,Number(r.weight).toFixed(3),show?num(r.net_bps):'…',show?num(r.advantage_bps):'…',show?Number(r.next_weight).toFixed(3):'…'])tr.insertCell().textContent=value}
+ button.textContent=show?'Hide outcome':'Reveal outcome'}
+ function changeDay(){show=false;draw()}function changeSymbol(){options(day,days.filter(x=>x.symbol===symbol.value).map(x=>x.date));changeDay()}
+ options(symbol,[...new Set(days.map(x=>x.symbol))]);symbol.onchange=changeSymbol;day.onchange=changeDay;button.onclick=()=>{show=!show;draw()};changeSymbol();
+})().catch(e=>document.getElementById('decision').textContent=e.message);
+</script></html>

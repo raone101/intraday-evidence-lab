@@ -1,0 +1,461 @@
+asset,symbol,strategy,available,resolved,trades,mean_bps_per_session,mean_advantage_bps
+Crypto,BTCUSDT,Acceleration,91,91,0,0.0000,9.4013
+Crypto,BTCUSDT,Band re-entry,91,91,3,-0.9909,8.4104
+Crypto,BTCUSDT,EMA pullback,91,91,9,-7.2162,2.1851
+Crypto,BTCUSDT,Efficient trend,91,91,2,-0.5573,8.8440
+Crypto,BTCUSDT,Failed auction,91,91,20,-6.9184,2.4829
+Crypto,BTCUSDT,Gap absorption,0,91,0,0.0000,9.4013
+Crypto,BTCUSDT,Inside range release,91,91,3,-1.0842,8.3171
+Crypto,BTCUSDT,Median cross,91,91,3,-1.5199,7.8814
+Crypto,BTCUSDT,Nearest morning analogues,61,91,30,-5.1061,4.2952
+Crypto,BTCUSDT,Opening range escape,91,91,19,-4.5019,4.8994
+Crypto,BTCUSDT,Profile migration,91,91,22,-4.8336,4.5677
+Crypto,BTCUSDT,RSI exhaustion,91,91,4,1.0256,10.4269
+Crypto,BTCUSDT,Range contraction breakout,91,91,5,-0.2361,9.1652
+Crypto,BTCUSDT,Range midpoint retest,91,91,5,-1.7328,7.6685
+Crypto,BTCUSDT,Serial dependence,91,91,13,-3.3909,6.0104
+Crypto,BTCUSDT,Shock retracement,91,91,0,0.0000,9.4013
+Crypto,BTCUSDT,Signed flow divergence,91,91,1,0.0119,9.4132
+Crypto,BTCUSDT,Three wave persistence,91,91,7,0.7482,10.1495
+Crypto,BTCUSDT,Trend with historical context,31,91,2,0.2126,9.6139
+Crypto,BTCUSDT,Typical move breakout,77,91,10,1.0759,10.4772
+Crypto,BTCUSDT,VWAP stretch fade,91,91,11,-0.2140,9.1873
+Crypto,BTCUSDT,Volume confirmed impulse,91,91,8,2.4728,11.8741
+Crypto,BTCUSDT,Wick rejection,91,91,7,-1.0749,8.3264
+Crypto,ETHUSDT,Acceleration,91,91,1,-0.5298,0.7914
+Crypto,ETHUSDT,Band re-entry,91,91,1,-0.3000,1.0212
+Crypto,ETHUSDT,EMA pullback,91,91,13,-3.4346,-2.1133
+Crypto,ETHUSDT,Efficient trend,91,91,1,0.3644,1.6856
+Crypto,ETHUSDT,Failed auction,91,91,19,-2.2734,-0.9522
+Crypto,ETHUSDT,Gap absorption,0,91,0,0.0000,1.3212
+Crypto,ETHUSDT,Inside range release,91,91,0,0.0000,1.3212
+Crypto,ETHUSDT,Median cross,91,91,3,-1.0059,0.3153
+Crypto,ETHUSDT,Nearest morning analogues,61,91,13,-1.5055,-0.1843
+Crypto,ETHUSDT,Opening range escape,91,91,13,-2.4955,-1.1743
+Crypto,ETHUSDT,Profile migration,91,91,19,-0.2539,1.0673
+Crypto,ETHUSDT,RSI exhaustion,91,91,0,0.0000,1.3212
+Crypto,ETHUSDT,Range contraction breakout,91,91,6,-1.3994,-0.0781
+Crypto,ETHUSDT,Range midpoint retest,91,91,3,1.6755,2.9967
+Crypto,ETHUSDT,Serial dependence,91,91,14,-4.6475,-3.3263
+Crypto,ETHUSDT,Shock retracement,91,91,0,0.0000,1.3212
+Crypto,ETHUSDT,Signed flow divergence,91,91,3,0.3559,1.6771
+Crypto,ETHUSDT,Three wave persistence,91,91,7,-2.1297,-0.8085
+Crypto,ETHUSDT,Trend with historical context,31,91,3,-0.0748,1.2464
+Crypto,ETHUSDT,Typical move breakout,77,91,10,1.8692,3.1904
+Crypto,ETHUSDT,VWAP stretch fade,91,91,12,2.2489,3.5701
+Crypto,ETHUSDT,Volume confirmed impulse,91,91,4,-1.5243,-0.2031
+Crypto,ETHUSDT,Wick rejection,91,91,10,-0.0007,1.3205
+ETF,QQQ,Acceleration,10,10,0,0.0000,52.1928
+ETF,QQQ,Band re-entry,10,10,1,-16.4750,35.7178
+ETF,QQQ,EMA pullback,10,10,3,-10.4911,41.7017
+ETF,QQQ,Efficient trend,10,10,1,7.8300,60.0228
+ETF,QQQ,Failed auction,10,10,5,-30.7958,21.3971
+ETF,QQQ,Gap absorption,4,10,0,0.0000,52.1928
+ETF,QQQ,Inside range release,10,10,0,0.0000,52.1928
+ETF,QQQ,Median cross,10,10,0,0.0000,52.1928
+ETF,QQQ,Nearest morning analogues,0,10,0,0.0000,52.1928
+ETF,QQQ,Opening range escape,10,10,5,-12.3515,39.8414
+ETF,QQQ,Profile migration,10,10,7,-14.7688,37.4240
+ETF,QQQ,RSI exhaustion,10,10,0,0.0000,52.1928
+ETF,QQQ,Range contraction breakout,10,10,2,-16.5959,35.5969
+ETF,QQQ,Range midpoint retest,10,10,1,-4.0326,48.1603
+ETF,QQQ,Serial dependence,10,10,1,-16.4750,35.7178
+ETF,QQQ,Shock retracement,10,10,0,0.0000,52.1928
+ETF,QQQ,Signed flow divergence,10,10,0,0.0000,52.1928
+ETF,QQQ,Three wave persistence,10,10,4,-1.4742,50.7186
+ETF,QQQ,Trend with historical context,0,10,0,0.0000,52.1928
+ETF,QQQ,Typical move breakout,0,10,0,0.0000,52.1928
+ETF,QQQ,VWAP stretch fade,10,10,3,21.2324,73.4252
+ETF,QQQ,Volume confirmed impulse,10,10,0,0.0000,52.1928
+ETF,QQQ,Wick rejection,10,10,3,-11.0183,41.1746
+ETF,SPY,Acceleration,263,263,7,-0.3374,9.9038
+ETF,SPY,Band re-entry,263,263,8,-0.1642,10.0770
+ETF,SPY,EMA pullback,263,263,113,-5.3963,4.8450
+ETF,SPY,Efficient trend,263,263,27,-1.1733,9.0680
+ETF,SPY,Failed auction,263,263,112,-3.4944,6.7468
+ETF,SPY,Gap absorption,263,263,20,-1.5132,8.7281
+ETF,SPY,Inside range release,263,263,18,-0.5690,9.6722
+ETF,SPY,Median cross,263,263,12,-0.1942,10.0470
+ETF,SPY,Nearest morning analogues,263,263,121,-4.1868,6.0545
+ETF,SPY,Opening range escape,263,263,138,-3.8958,6.3454
+ETF,SPY,Profile migration,263,263,165,-5.6242,4.6171
+ETF,SPY,RSI exhaustion,263,263,12,-0.6134,9.6279
+ETF,SPY,Range contraction breakout,263,263,43,-0.9507,9.2906
+ETF,SPY,Range midpoint retest,263,263,24,-0.3747,9.8666
+ETF,SPY,Serial dependence,263,263,66,-4.2443,5.9969
+ETF,SPY,Shock retracement,263,263,1,-0.0406,10.2007
+ETF,SPY,Signed flow divergence,263,263,8,-0.9006,9.3407
+ETF,SPY,Three wave persistence,263,263,65,-1.9776,8.2637
+ETF,SPY,Trend with historical context,263,263,49,-0.5294,9.7119
+ETF,SPY,Typical move breakout,263,263,88,-2.7399,7.5014
+ETF,SPY,VWAP stretch fade,263,263,84,-5.3040,4.9373
+ETF,SPY,Volume confirmed impulse,263,263,8,-0.8347,9.4065
+ETF,SPY,Wick rejection,263,263,45,-2.8702,7.3711
+Equity,AAPL,Acceleration,10,10,2,-6.7941,27.0672
+Equity,AAPL,Band re-entry,10,10,0,0.0000,33.8613
+Equity,AAPL,EMA pullback,10,10,5,-22.6351,11.2263
+Equity,AAPL,Efficient trend,10,10,0,0.0000,33.8613
+Equity,AAPL,Failed auction,10,10,2,-18.6248,15.2365
+Equity,AAPL,Gap absorption,4,10,2,5.7526,39.6140
+Equity,AAPL,Inside range release,10,10,0,0.0000,33.8613
+Equity,AAPL,Median cross,10,10,0,0.0000,33.8613
+Equity,AAPL,Nearest morning analogues,0,10,0,0.0000,33.8613
+Equity,AAPL,Opening range escape,10,10,4,-9.2231,24.6382
+Equity,AAPL,Profile migration,10,10,5,-24.0825,9.7788
+Equity,AAPL,RSI exhaustion,10,10,0,0.0000,33.8613
+Equity,AAPL,Range contraction breakout,10,10,2,-11.3866,22.4747
+Equity,AAPL,Range midpoint retest,10,10,0,0.0000,33.8613
+Equity,AAPL,Serial dependence,10,10,5,-18.4045,15.4569
+Equity,AAPL,Shock retracement,10,10,0,0.0000,33.8613
+Equity,AAPL,Signed flow divergence,10,10,1,6.8480,40.7093
+Equity,AAPL,Three wave persistence,10,10,3,-13.1571,20.7042
+Equity,AAPL,Trend with historical context,0,10,0,0.0000,33.8613
+Equity,AAPL,Typical move breakout,0,10,0,0.0000,33.8613
+Equity,AAPL,VWAP stretch fade,10,10,3,2.8092,36.6705
+Equity,AAPL,Volume confirmed impulse,10,10,0,0.0000,33.8613
+Equity,AAPL,Wick rejection,10,10,2,-10.2409,23.6205
+Equity,AMZN,Acceleration,10,10,0,0.0000,43.4909
+Equity,AMZN,Band re-entry,10,10,0,0.0000,43.4909
+Equity,AMZN,EMA pullback,10,10,8,-23.9638,19.5270
+Equity,AMZN,Efficient trend,10,10,0,0.0000,43.4909
+Equity,AMZN,Failed auction,10,10,2,18.3929,61.8837
+Equity,AMZN,Gap absorption,4,10,2,-31.6812,11.8097
+Equity,AMZN,Inside range release,10,10,0,0.0000,43.4909
+Equity,AMZN,Median cross,10,10,2,-10.6219,32.8690
+Equity,AMZN,Nearest morning analogues,0,10,0,0.0000,43.4909
+Equity,AMZN,Opening range escape,10,10,6,-49.3411,-5.8503
+Equity,AMZN,Profile migration,10,10,4,-27.0852,16.4056
+Equity,AMZN,RSI exhaustion,10,10,0,0.0000,43.4909
+Equity,AMZN,Range contraction breakout,10,10,5,-25.5295,17.9614
+Equity,AMZN,Range midpoint retest,10,10,1,-2.7047,40.7862
+Equity,AMZN,Serial dependence,10,10,5,-7.8337,35.6571
+Equity,AMZN,Shock retracement,10,10,0,0.0000,43.4909
+Equity,AMZN,Signed flow divergence,10,10,0,0.0000,43.4909
+Equity,AMZN,Three wave persistence,10,10,4,-21.9204,21.5705
+Equity,AMZN,Trend with historical context,0,10,0,0.0000,43.4909
+Equity,AMZN,Typical move breakout,0,10,0,0.0000,43.4909
+Equity,AMZN,VWAP stretch fade,10,10,4,22.1959,65.6867
+Equity,AMZN,Volume confirmed impulse,10,10,0,0.0000,43.4909
+Equity,AMZN,Wick rejection,10,10,3,-16.4776,27.0133
+Equity,F,Acceleration,10,10,0,0.0000,46.6341
+Equity,F,Band re-entry,10,10,0,0.0000,46.6341
+Equity,F,EMA pullback,10,10,4,-9.4898,37.1443
+Equity,F,Efficient trend,10,10,1,-13.4776,33.1565
+Equity,F,Failed auction,10,10,4,-15.7139,30.9202
+Equity,F,Gap absorption,4,10,0,0.0000,46.6341
+Equity,F,Inside range release,10,10,1,2.1507,48.7848
+Equity,F,Median cross,10,10,0,0.0000,46.6341
+Equity,F,Nearest morning analogues,0,10,0,0.0000,46.6341
+Equity,F,Opening range escape,10,10,4,-18.7290,27.9051
+Equity,F,Profile migration,10,10,4,-10.8284,35.8057
+Equity,F,RSI exhaustion,10,10,0,0.0000,46.6341
+Equity,F,Range contraction breakout,10,10,1,2.1507,48.7848
+Equity,F,Range midpoint retest,10,10,0,0.0000,46.6341
+Equity,F,Serial dependence,10,10,2,-7.3496,39.2845
+Equity,F,Shock retracement,10,10,0,0.0000,46.6341
+Equity,F,Signed flow divergence,10,10,0,0.0000,46.6341
+Equity,F,Three wave persistence,10,10,1,-13.4776,33.1565
+Equity,F,Trend with historical context,0,10,0,0.0000,46.6341
+Equity,F,Typical move breakout,0,10,0,0.0000,46.6341
+Equity,F,VWAP stretch fade,10,10,3,1.3927,48.0268
+Equity,F,Volume confirmed impulse,10,10,0,0.0000,46.6341
+Equity,F,Wick rejection,10,10,3,3.4136,50.0477
+Equity,META,Acceleration,10,10,0,0.0000,72.6630
+Equity,META,Band re-entry,10,10,0,0.0000,72.6630
+Equity,META,EMA pullback,10,10,7,-47.7896,24.8734
+Equity,META,Efficient trend,10,10,0,0.0000,72.6630
+Equity,META,Failed auction,10,10,4,-43.1673,29.4958
+Equity,META,Gap absorption,4,10,0,0.0000,72.6630
+Equity,META,Inside range release,10,10,0,0.0000,72.6630
+Equity,META,Median cross,10,10,0,0.0000,72.6630
+Equity,META,Nearest morning analogues,0,10,0,0.0000,72.6630
+Equity,META,Opening range escape,10,10,5,-34.6769,37.9861
+Equity,META,Profile migration,10,10,7,-68.8174,3.8456
+Equity,META,RSI exhaustion,10,10,0,0.0000,72.6630
+Equity,META,Range contraction breakout,10,10,7,-65.5933,7.0697
+Equity,META,Range midpoint retest,10,10,1,-1.1119,71.5512
+Equity,META,Serial dependence,10,10,3,-28.9250,43.7380
+Equity,META,Shock retracement,10,10,0,0.0000,72.6630
+Equity,META,Signed flow divergence,10,10,3,31.8896,104.5526
+Equity,META,Three wave persistence,10,10,2,-9.4217,63.2414
+Equity,META,Trend with historical context,0,10,0,0.0000,72.6630
+Equity,META,Typical move breakout,0,10,0,0.0000,72.6630
+Equity,META,VWAP stretch fade,10,10,2,20.8963,93.5594
+Equity,META,Volume confirmed impulse,10,10,0,0.0000,72.6630
+Equity,META,Wick rejection,10,10,2,15.5151,88.1781
+Equity,MSFT,Acceleration,10,10,1,8.9307,33.5625
+Equity,MSFT,Band re-entry,10,10,0,0.0000,24.6318
+Equity,MSFT,EMA pullback,10,10,4,-2.1347,22.4970
+Equity,MSFT,Efficient trend,10,10,0,0.0000,24.6318
+Equity,MSFT,Failed auction,10,10,1,-2.6538,21.9779
+Equity,MSFT,Gap absorption,4,10,1,-18.0855,6.5463
+Equity,MSFT,Inside range release,10,10,1,-1.9578,22.6740
+Equity,MSFT,Median cross,10,10,1,-1.9578,22.6740
+Equity,MSFT,Nearest morning analogues,0,10,0,0.0000,24.6318
+Equity,MSFT,Opening range escape,10,10,5,-5.7539,18.8779
+Equity,MSFT,Profile migration,10,10,5,-21.1510,3.4808
+Equity,MSFT,RSI exhaustion,10,10,2,20.0443,44.6760
+Equity,MSFT,Range contraction breakout,10,10,4,-33.3426,-8.7108
+Equity,MSFT,Range midpoint retest,10,10,0,0.0000,24.6318
+Equity,MSFT,Serial dependence,10,10,2,-10.2653,14.3664
+Equity,MSFT,Shock retracement,10,10,0,0.0000,24.6318
+Equity,MSFT,Signed flow divergence,10,10,2,13.4487,38.0805
+Equity,MSFT,Three wave persistence,10,10,4,-11.1955,13.4363
+Equity,MSFT,Trend with historical context,0,10,0,0.0000,24.6318
+Equity,MSFT,Typical move breakout,0,10,0,0.0000,24.6318
+Equity,MSFT,VWAP stretch fade,10,10,3,9.1235,33.7552
+Equity,MSFT,Volume confirmed impulse,10,10,0,0.0000,24.6318
+Equity,MSFT,Wick rejection,10,10,3,-10.3604,14.2714
+Equity,NFLX,Acceleration,10,10,0,0.0000,45.6895
+Equity,NFLX,Band re-entry,10,10,1,-1.9558,43.7337
+Equity,NFLX,EMA pullback,10,10,6,-35.3280,10.3615
+Equity,NFLX,Efficient trend,10,10,0,0.0000,45.6895
+Equity,NFLX,Failed auction,10,10,2,-15.0551,30.6344
+Equity,NFLX,Gap absorption,4,10,1,-17.3381,28.3514
+Equity,NFLX,Inside range release,10,10,0,0.0000,45.6895
+Equity,NFLX,Median cross,10,10,1,-17.3381,28.3514
+Equity,NFLX,Nearest morning analogues,0,10,0,0.0000,45.6895
+Equity,NFLX,Opening range escape,10,10,4,-17.3004,28.3891
+Equity,NFLX,Profile migration,10,10,2,-7.6671,38.0224
+Equity,NFLX,RSI exhaustion,10,10,0,0.0000,45.6895
+Equity,NFLX,Range contraction breakout,10,10,2,-19.0433,26.6462
+Equity,NFLX,Range midpoint retest,10,10,0,0.0000,45.6895
+Equity,NFLX,Serial dependence,10,10,3,0.9185,46.6080
+Equity,NFLX,Shock retracement,10,10,0,0.0000,45.6895
+Equity,NFLX,Signed flow divergence,10,10,0,0.0000,45.6895
+Equity,NFLX,Three wave persistence,10,10,2,1.0660,46.7555
+Equity,NFLX,Trend with historical context,0,10,0,0.0000,45.6895
+Equity,NFLX,Typical move breakout,0,10,0,0.0000,45.6895
+Equity,NFLX,VWAP stretch fade,10,10,1,14.6769,60.3664
+Equity,NFLX,Volume confirmed impulse,10,10,0,0.0000,45.6895
+Equity,NFLX,Wick rejection,10,10,1,-3.1071,42.5824
+Equity,NVDA,Acceleration,10,10,0,0.0000,-20.6690
+Equity,NVDA,Band re-entry,10,10,0,0.0000,-20.6690
+Equity,NVDA,EMA pullback,10,10,4,53.0912,32.4222
+Equity,NVDA,Efficient trend,10,10,2,35.0017,14.3327
+Equity,NVDA,Failed auction,10,10,5,-43.9957,-64.6647
+Equity,NVDA,Gap absorption,4,10,1,9.2112,-11.4578
+Equity,NVDA,Inside range release,10,10,0,0.0000,-20.6690
+Equity,NVDA,Median cross,10,10,0,0.0000,-20.6690
+Equity,NVDA,Nearest morning analogues,0,10,0,0.0000,-20.6690
+Equity,NVDA,Opening range escape,10,10,4,53.5584,32.8894
+Equity,NVDA,Profile migration,10,10,3,-14.5970,-35.2660
+Equity,NVDA,RSI exhaustion,10,10,0,0.0000,-20.6690
+Equity,NVDA,Range contraction breakout,10,10,3,-51.8786,-72.5475
+Equity,NVDA,Range midpoint retest,10,10,0,0.0000,-20.6690
+Equity,NVDA,Serial dependence,10,10,1,-12.6543,-33.3233
+Equity,NVDA,Shock retracement,10,10,0,0.0000,-20.6690
+Equity,NVDA,Signed flow divergence,10,10,0,0.0000,-20.6690
+Equity,NVDA,Three wave persistence,10,10,2,32.6232,11.9542
+Equity,NVDA,Trend with historical context,0,10,0,0.0000,-20.6690
+Equity,NVDA,Typical move breakout,0,10,0,0.0000,-20.6690
+Equity,NVDA,VWAP stretch fade,10,10,1,-11.3558,-32.0248
+Equity,NVDA,Volume confirmed impulse,10,10,0,0.0000,-20.6690
+Equity,NVDA,Wick rejection,10,10,0,0.0000,-20.6690
+Equity,TSLA,Acceleration,10,10,0,0.0000,11.4586
+Equity,TSLA,Band re-entry,10,10,0,0.0000,11.4586
+Equity,TSLA,EMA pullback,10,10,1,-0.4262,11.0324
+Equity,TSLA,Efficient trend,10,10,1,7.6005,19.0591
+Equity,TSLA,Failed auction,10,10,4,5.1180,16.5766
+Equity,TSLA,Gap absorption,4,10,1,14.0845,25.5431
+Equity,TSLA,Inside range release,10,10,2,11.3647,22.8234
+Equity,TSLA,Median cross,10,10,2,-9.1005,2.3582
+Equity,TSLA,Nearest morning analogues,0,10,0,0.0000,11.4586
+Equity,TSLA,Opening range escape,10,10,5,-15.3935,-3.9348
+Equity,TSLA,Profile migration,10,10,5,-35.9943,-24.5357
+Equity,TSLA,RSI exhaustion,10,10,0,0.0000,11.4586
+Equity,TSLA,Range contraction breakout,10,10,3,-0.7731,10.6855
+Equity,TSLA,Range midpoint retest,10,10,2,23.9137,35.3723
+Equity,TSLA,Serial dependence,10,10,2,18.4718,29.9304
+Equity,TSLA,Shock retracement,10,10,0,0.0000,11.4586
+Equity,TSLA,Signed flow divergence,10,10,0,0.0000,11.4586
+Equity,TSLA,Three wave persistence,10,10,1,7.6005,19.0591
+Equity,TSLA,Trend with historical context,0,10,0,0.0000,11.4586
+Equity,TSLA,Typical move breakout,0,10,0,0.0000,11.4586
+Equity,TSLA,VWAP stretch fade,10,10,3,18.4176,29.8762
+Equity,TSLA,Volume confirmed impulse,10,10,0,0.0000,11.4586
+Equity,TSLA,Wick rejection,10,10,2,-20.5642,-9.1055
+Forex,EURUSD,Acceleration,20,17,1,-0.3051,-3.9750
+Forex,EURUSD,Band re-entry,20,17,1,-0.5421,-4.2120
+Forex,EURUSD,EMA pullback,20,17,6,1.5313,-2.1386
+Forex,EURUSD,Efficient trend,20,17,3,0.8966,-2.7733
+Forex,EURUSD,Failed auction,20,17,10,2.3828,-1.2871
+Forex,EURUSD,Gap absorption,0,17,0,0.0000,-3.6699
+Forex,EURUSD,Inside range release,20,17,0,0.0000,-3.6699
+Forex,EURUSD,Median cross,20,17,0,0.0000,-3.6699
+Forex,EURUSD,Nearest morning analogues,0,17,0,0.0000,-3.6699
+Forex,EURUSD,Opening range escape,20,17,11,3.1454,-0.5245
+Forex,EURUSD,Profile migration,20,17,15,3.1162,-0.5537
+Forex,EURUSD,RSI exhaustion,20,17,1,0.6083,-3.0616
+Forex,EURUSD,Range contraction breakout,20,17,1,2.8755,-0.7944
+Forex,EURUSD,Range midpoint retest,20,17,0,0.0000,-3.6699
+Forex,EURUSD,Serial dependence,20,17,4,1.6269,-2.0429
+Forex,EURUSD,Shock retracement,20,17,0,0.0000,-3.6699
+Forex,EURUSD,Signed flow divergence,0,17,0,0.0000,-3.6699
+Forex,EURUSD,Three wave persistence,20,17,7,3.5804,-0.0894
+Forex,EURUSD,Trend with historical context,0,17,0,0.0000,-3.6699
+Forex,EURUSD,Typical move breakout,6,17,2,-0.8010,-4.4709
+Forex,EURUSD,VWAP stretch fade,0,17,0,0.0000,-3.6699
+Forex,EURUSD,Volume confirmed impulse,0,17,0,0.0000,-3.6699
+Forex,EURUSD,Wick rejection,20,17,6,-4.3714,-8.0413
+Forex,GBPUSD,Acceleration,20,19,0,0.0000,-5.3324
+Forex,GBPUSD,Band re-entry,20,19,2,-2.6606,-7.9930
+Forex,GBPUSD,EMA pullback,20,19,12,4.5890,-0.7434
+Forex,GBPUSD,Efficient trend,20,19,2,-0.6469,-5.9793
+Forex,GBPUSD,Failed auction,20,19,8,0.3287,-5.0037
+Forex,GBPUSD,Gap absorption,0,19,0,0.0000,-5.3324
+Forex,GBPUSD,Inside range release,20,19,0,0.0000,-5.3324
+Forex,GBPUSD,Median cross,20,19,2,-1.4492,-6.7816
+Forex,GBPUSD,Nearest morning analogues,0,19,0,0.0000,-5.3324
+Forex,GBPUSD,Opening range escape,20,19,12,-0.1535,-5.4859
+Forex,GBPUSD,Profile migration,20,19,13,2.1172,-3.2152
+Forex,GBPUSD,RSI exhaustion,20,19,2,-0.4059,-5.7383
+Forex,GBPUSD,Range contraction breakout,20,19,1,-0.1614,-5.4938
+Forex,GBPUSD,Range midpoint retest,20,19,1,1.4509,-3.8815
+Forex,GBPUSD,Serial dependence,20,19,5,0.5510,-4.7813
+Forex,GBPUSD,Shock retracement,20,19,0,0.0000,-5.3324
+Forex,GBPUSD,Signed flow divergence,0,19,0,0.0000,-5.3324
+Forex,GBPUSD,Three wave persistence,20,19,4,3.2006,-2.1318
+Forex,GBPUSD,Trend with historical context,0,19,0,0.0000,-5.3324
+Forex,GBPUSD,Typical move breakout,6,19,2,-0.1078,-5.4402
+Forex,GBPUSD,VWAP stretch fade,0,19,0,0.0000,-5.3324
+Forex,GBPUSD,Volume confirmed impulse,0,19,0,0.0000,-5.3324
+Forex,GBPUSD,Wick rejection,20,19,5,-4.6075,-9.9399
+Forex,USDJPY,Acceleration,20,18,0,0.0000,-1.6043
+Forex,USDJPY,Band re-entry,20,18,1,0.5156,-1.0887
+Forex,USDJPY,EMA pullback,20,18,4,0.8467,-0.7576
+Forex,USDJPY,Efficient trend,20,18,0,0.0000,-1.6043
+Forex,USDJPY,Failed auction,20,18,11,0.6363,-0.9680
+Forex,USDJPY,Gap absorption,0,18,0,0.0000,-1.6043
+Forex,USDJPY,Inside range release,20,18,1,0.7215,-0.8828
+Forex,USDJPY,Median cross,20,18,2,0.0124,-1.5919
+Forex,USDJPY,Nearest morning analogues,0,18,0,0.0000,-1.6043
+Forex,USDJPY,Opening range escape,20,18,9,0.9748,-0.6295
+Forex,USDJPY,Profile migration,20,18,12,1.0676,-0.5367
+Forex,USDJPY,RSI exhaustion,20,18,2,0.0942,-1.5101
+Forex,USDJPY,Range contraction breakout,20,18,1,0.7370,-0.8673
+Forex,USDJPY,Range midpoint retest,20,18,0,0.0000,-1.6043
+Forex,USDJPY,Serial dependence,20,18,2,-0.4739,-2.0782
+Forex,USDJPY,Shock retracement,20,18,0,0.0000,-1.6043
+Forex,USDJPY,Signed flow divergence,0,18,0,0.0000,-1.6043
+Forex,USDJPY,Three wave persistence,20,18,1,0.7215,-0.8828
+Forex,USDJPY,Trend with historical context,0,18,0,0.0000,-1.6043
+Forex,USDJPY,Typical move breakout,6,18,3,0.2018,-1.4025
+Forex,USDJPY,VWAP stretch fade,0,18,0,0.0000,-1.6043
+Forex,USDJPY,Volume confirmed impulse,0,18,0,0.0000,-1.6043
+Forex,USDJPY,Wick rejection,20,18,2,0.3040,-1.3003
+Futures,ES,Acceleration,10,10,1,-1.8011,7.9046
+Futures,ES,Band re-entry,10,10,0,0.0000,9.7057
+Futures,ES,EMA pullback,10,10,4,-3.1600,6.5456
+Futures,ES,Efficient trend,10,10,3,14.6266,24.3322
+Futures,ES,Failed auction,10,10,2,-14.7052,-4.9996
+Futures,ES,Gap absorption,0,10,0,0.0000,9.7057
+Futures,ES,Inside range release,10,10,0,0.0000,9.7057
+Futures,ES,Median cross,10,10,0,0.0000,9.7057
+Futures,ES,Nearest morning analogues,0,10,0,0.0000,9.7057
+Futures,ES,Opening range escape,10,10,8,-7.8175,1.8882
+Futures,ES,Profile migration,10,10,7,-23.2312,-13.5255
+Futures,ES,RSI exhaustion,10,10,0,0.0000,9.7057
+Futures,ES,Range contraction breakout,10,10,2,-8.4476,1.2581
+Futures,ES,Range midpoint retest,10,10,1,-1.8011,7.9046
+Futures,ES,Serial dependence,10,10,1,-10.1966,-0.4910
+Futures,ES,Shock retracement,10,10,0,0.0000,9.7057
+Futures,ES,Signed flow divergence,10,10,0,0.0000,9.7057
+Futures,ES,Three wave persistence,10,10,4,12.8255,22.5312
+Futures,ES,Trend with historical context,0,10,0,0.0000,9.7057
+Futures,ES,Typical move breakout,0,10,0,0.0000,9.7057
+Futures,ES,VWAP stretch fade,10,10,4,30.6483,40.3540
+Futures,ES,Volume confirmed impulse,10,10,0,0.0000,9.7057
+Futures,ES,Wick rejection,10,10,2,-6.8428,2.8628
+Futures,GC,Acceleration,10,10,1,-0.4065,-11.4283
+Futures,GC,Band re-entry,10,10,1,-10.9415,-21.9633
+Futures,GC,EMA pullback,10,10,5,-8.7509,-19.7727
+Futures,GC,Efficient trend,10,10,1,-0.4065,-11.4283
+Futures,GC,Failed auction,10,10,4,0.5603,-10.4615
+Futures,GC,Gap absorption,0,10,0,0.0000,-11.0218
+Futures,GC,Inside range release,10,10,1,-9.6254,-20.6472
+Futures,GC,Median cross,10,10,1,4.8242,-6.1976
+Futures,GC,Nearest morning analogues,0,10,0,0.0000,-11.0218
+Futures,GC,Opening range escape,10,10,4,5.6373,-5.3845
+Futures,GC,Profile migration,10,10,4,6.5005,-4.5213
+Futures,GC,RSI exhaustion,10,10,0,0.0000,-11.0218
+Futures,GC,Range contraction breakout,10,10,3,-15.7427,-26.7645
+Futures,GC,Range midpoint retest,10,10,0,0.0000,-11.0218
+Futures,GC,Serial dependence,10,10,2,14.6154,3.5936
+Futures,GC,Shock retracement,10,10,0,0.0000,-11.0218
+Futures,GC,Signed flow divergence,10,10,0,0.0000,-11.0218
+Futures,GC,Three wave persistence,10,10,3,4.8013,-6.2205
+Futures,GC,Trend with historical context,0,10,0,0.0000,-11.0218
+Futures,GC,Typical move breakout,0,10,0,0.0000,-11.0218
+Futures,GC,VWAP stretch fade,10,10,0,0.0000,-11.0218
+Futures,GC,Volume confirmed impulse,10,10,1,-0.4065,-11.4283
+Futures,GC,Wick rejection,10,10,1,3.1696,-7.8522
+Futures,NQ,Acceleration,10,10,0,0.0000,13.6517
+Futures,NQ,Band re-entry,10,10,0,0.0000,13.6517
+Futures,NQ,EMA pullback,10,10,3,-8.0556,5.5961
+Futures,NQ,Efficient trend,10,10,1,8.6838,22.3354
+Futures,NQ,Failed auction,10,10,5,-26.7879,-13.1363
+Futures,NQ,Gap absorption,0,10,0,0.0000,13.6517
+Futures,NQ,Inside range release,10,10,0,0.0000,13.6517
+Futures,NQ,Median cross,10,10,0,0.0000,13.6517
+Futures,NQ,Nearest morning analogues,0,10,0,0.0000,13.6517
+Futures,NQ,Opening range escape,10,10,5,-7.9489,5.7027
+Futures,NQ,Profile migration,10,10,7,-8.8624,4.7892
+Futures,NQ,RSI exhaustion,10,10,0,0.0000,13.6517
+Futures,NQ,Range contraction breakout,10,10,2,-14.9310,-1.2793
+Futures,NQ,Range midpoint retest,10,10,1,-3.2663,10.3853
+Futures,NQ,Serial dependence,10,10,1,-15.8054,-2.1537
+Futures,NQ,Shock retracement,10,10,0,0.0000,13.6517
+Futures,NQ,Signed flow divergence,10,10,0,0.0000,13.6517
+Futures,NQ,Three wave persistence,10,10,4,1.9544,15.6061
+Futures,NQ,Trend with historical context,0,10,0,0.0000,13.6517
+Futures,NQ,Typical move breakout,0,10,0,0.0000,13.6517
+Futures,NQ,VWAP stretch fade,10,10,4,28.0975,41.7491
+Futures,NQ,Volume confirmed impulse,10,10,0,0.0000,13.6517
+Futures,NQ,Wick rejection,10,10,3,-8.5963,5.0554
+Options,AAPL-20140621-650-call,Acceleration,1,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,Band re-entry,1,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,EMA pullback,1,1,1,-97.0000,0.0000
+Options,AAPL-20140621-650-call,Efficient trend,1,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,Failed auction,1,1,1,-97.0000,0.0000
+Options,AAPL-20140621-650-call,Gap absorption,0,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,Inside range release,1,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,Median cross,1,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,Nearest morning analogues,0,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,Opening range escape,1,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,Profile migration,1,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,RSI exhaustion,1,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,Range contraction breakout,1,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,Range midpoint retest,1,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,Serial dependence,1,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,Shock retracement,1,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,Signed flow divergence,0,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,Three wave persistence,1,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,Trend with historical context,0,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,Typical move breakout,0,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,VWAP stretch fade,0,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,Volume confirmed impulse,0,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-call,Wick rejection,1,1,0,0.0000,97.0000
+Options,AAPL-20140621-650-put,Acceleration,1,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,Band re-entry,1,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,EMA pullback,1,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,Efficient trend,1,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,Failed auction,1,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,Gap absorption,0,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,Inside range release,1,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,Median cross,1,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,Nearest morning analogues,0,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,Opening range escape,1,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,Profile migration,1,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,RSI exhaustion,1,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,Range contraction breakout,1,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,Range midpoint retest,1,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,Serial dependence,1,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,Shock retracement,1,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,Signed flow divergence,0,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,Three wave persistence,1,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,Trend with historical context,0,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,Typical move breakout,0,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,VWAP stretch fade,0,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,Volume confirmed impulse,0,1,0,0.0000,0.0000
+Options,AAPL-20140621-650-put,Wick rejection,1,1,0,0.0000,0.0000
